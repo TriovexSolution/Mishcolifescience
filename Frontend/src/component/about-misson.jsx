@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 const AboutMissionCard = () => {
   // Variants for initial position and hover animation
@@ -53,13 +54,10 @@ const AboutMissionCard = () => {
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
 
-            <a
-              href="#"
-              className="text-primary fw-semibold text-decoration-none"
-              style={{ fontSize: "1rem" }}
-            >
+            
+            <NavLink to="/about" className="text-primary fw-semibold text-decoration-none" style={{ fontSize: "1rem" }}>
               Read More →
-            </a>
+            </NavLink>
           </motion.div>
 
           {/* ---- OUR MISSION ---- */}
