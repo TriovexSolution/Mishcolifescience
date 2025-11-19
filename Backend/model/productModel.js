@@ -43,20 +43,22 @@
 
 // export default mongoose.model("Product", productSchema);
 
-
 // models/Product.js
 import mongoose from "mongoose";
 
 const compositionSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
-  strength: { type: String, required: true, trim: true }
+  strength: { type: String, required: true, trim: true },
 });
 
 // NEW: Drug-wise MOA schema
-const moaSchema = new mongoose.Schema({
-  drug: { type: String, required: true, trim: true },
-  moa: { type: String, required: true, trim: true }
-}, { _id: false }); // No _id for sub-documents
+const moaSchema = new mongoose.Schema(
+  {
+    drug: { type: String, required: true, trim: true },
+    moa: { type: String, required: true, trim: true },
+  },
+  { _id: false }
+); // No _id for sub-documents
 
 const productSchema = new mongoose.Schema({
   productName: { type: String, required: true, trim: true, unique: true },
@@ -66,7 +68,15 @@ const productSchema = new mongoose.Schema({
   dosageForm: {
     type: String,
     required: true,
-    enum: ["Tablet", "Capsule", "Injection", "Syrup", "Cream", "Ointment", "Powder"]
+    enum: [
+      "Tablet",
+      "Capsule",
+      "Injection",
+      "Syrup",
+      "Cream",
+      "Ointment",
+      "Powder",
+    ],
   },
   administrationRoute: { type: String, required: true, trim: true },
   composition: [compositionSchema],
@@ -77,8 +87,8 @@ const productSchema = new mongoose.Schema({
     required: [true, "At least one use is required"],
     validate: {
       validator: (v) => Array.isArray(v) && v.length > 0,
-      message: "Uses cannot be empty"
-    }
+      message: "Uses cannot be empty",
+    },
   },
 
   // === NEW FIELD 2: Drug-wise MOA ===
@@ -86,9 +96,9 @@ const productSchema = new mongoose.Schema({
     type: [moaSchema],
     default: [],
     validate: {
-      validator: (v) => v.every(item => item.drug && item.moa),
-      message: "Each MOA entry must have 'drug' and 'moa'"
-    }
+      validator: (v) => v.every((item) => item.drug && item.moa),
+      message: "Each MOA entry must have 'drug' and 'moa'",
+    },
   },
 
   indications: { type: [String], required: true },
@@ -101,13 +111,16 @@ const productSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
-    required: [true, "Category is required"]
+    required: [true, "Category is required"],
   },
 
   isFeatured: { type: Boolean, default: false },
-  productImage: { type: String, default: "https://via.placeholder.com/600x600" },
+  productImage: {
+    type: [String],
+    default: ["https://via.placeholder.com/600x600"],
+  },
   color: { type: String, trim: true, default: null },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
 });
 
 // Index for performance

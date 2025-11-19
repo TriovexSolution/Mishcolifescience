@@ -1,15 +1,14 @@
 // config/multer.js
-// const multer = require('multer');
-// const path = require('path');
-// const fs = require('fs');
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+
 // Ensure upload directories exist
 const blogDir = 'uploads/blogs';
 const avatarDir = 'uploads/avatars';
+const productDir = 'uploads/products';
 
-[blogDir, avatarDir].forEach(dir => {
+[blogDir, avatarDir, productDir].forEach(dir => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -31,16 +30,22 @@ const imageFilter = (req, file, cb) => {
 // Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    if (file.fieldname === 'imageUrl') {
-      cb(null, blogDir);
-    } else if (file.fieldname === 'senderPhoto') {
-      cb(null, avatarDir);
-    } else {
-      cb(new Error('Invalid field name'));
+    switch (file.fieldname) {
+      case 'imageUrl':
+        cb(null, blogDir);
+        break;
+      case 'senderPhoto':
+        cb(null, avatarDir);
+        break;
+      case 'productImage':
+        cb(null, productDir);
+        break;
+      default:
+        cb(new Error('Invalid field name'));
     }
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
     cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
   }
 });
