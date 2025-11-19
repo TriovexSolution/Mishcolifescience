@@ -26,7 +26,7 @@ export const validateContact = [
 
   body("message")
     .trim()
-    .isLength({ min: 10, max: 1000 })
+    .isLength({ min: 1, max: 1000 })
     .withMessage("Message must be 10–1000 characters")
     .escape(),
 

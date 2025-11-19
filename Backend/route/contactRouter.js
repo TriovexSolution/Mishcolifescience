@@ -5,7 +5,7 @@ import { validateContact } from "../Middleware/contactValidator.js";
 
 const router = express.Router();
 
-router.post("/addcontact", validateContact, submitContact);
+router.post("/addcontact", ...validateContact, submitContact);
 router.get("/getallcontacts", getAllContacts);
 
 export default router;
