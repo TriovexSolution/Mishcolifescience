@@ -1,24 +1,75 @@
-import React from "react";
-import authorImg from "../assets/image/whywestarted.jpg";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
+// Assuming you have 'Api' exported from a file like '../api'
+import { Api } from "../api"; 
+const api = Api;
 
-export default function BlogPost() {
-  const sections = [
-    {
-      heading:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non blandit massa enim nec. Scelerisque viverra mauris in aliquam sem. At risus viverra adipiscing at in tellus. Sociis natoque penatibus et magnis dis parturient montes. Ridiculus mus mauris vitae ultricies leo. Neque egestas congue quisque egestas diam. Risus in hendrerit gravida rutrum quisque non.",
-    },
-    {
-      heading:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non blandit massa enim nec. Scelerisque viverra mauris in aliquam sem. At risus viverra adipiscing at in tellus. Sociis natoque penatibus et magnis dis parturient montes. Ridiculus mus mauris vitae ultricies leo. Neque egestas congue quisque egestas diam. Risus in hendrerit gravida rutrum quisque non.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non blandit massa enim nec. Scelerisque viverra mauris in aliquam sem. At risus viverra adipiscing at in tellus. Sociis natoque penatibus et magnis dis parturient montes. Ridiculus mus mauris vitae ultricies leo. Neque egestas congue quisque egestas diam. Risus in hendrerit gravida rutrum quisque non.",
-    },
-  ];
+// Initial state for the blog post details
+const initialPostState = {
+  title: "Loading...",
+  description: "Fetching blog details...",
+  imageUrl: null,
+  senderName: "Unknown Author",
+  senderPhoto: null,
+  createdAt: new Date().toISOString(),
+  content: [], // Array for detailed sections
+};
 
-  // Animation variants
+export default function SingleblogPage() {
+  const [blogPost, setBlogPost] = useState(initialPostState);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  // --- Data Fetching Logic ---
+  useEffect(() => {
+    // 1. Get Blog ID from Session Storage
+    const blogId = sessionStorage.getItem("blogId");
+
+    if (!blogId) {
+      setError("Error: Blog ID not found in session storage.");
+      setLoading(false);
+      return;
+    }
+
+    const fetchPostDetails = async () => {
+      try {
+        // Construct the correct endpoint using the retrieved ID
+        // Your backend route: router.get("/getbyid/:id", getBlogById);
+        const response = await axios.get(`${api}/api/blogs/getbyid/${blogId}`);
+
+        if (response.data.success && response.data.data) {
+          const postData = response.data.data;
+          setBlogPost(postData);
+        } else {
+          setError("Blog post details not found.");
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching blog details:", err);
+        setError("Failed to load blog post. Check API connection or ID validity.");
+        setLoading(false);
+      }
+    };
+
+    fetchPostDetails();
+  }, []);
+
+  // Format the date for display
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // Fix path format for images (replace backslashes with forward slashes)
+  const getImageUrl = (path) => {
+    if (!path) return "placeholder.jpg"; // Fallback image
+    // Assuming backend serves images via ${api}/${path} (e.g., http://localhost:5000/uploads/...)
+    return `${api}/${path.replace(/\\/g, '/')}`;
+  };
+
+  // --- Animation variants (Unchanged) ---
   const authorImgVariant = {
     hidden: { x: -50, opacity: 0 },
     visible: { x: 0, opacity: 1, transition: { duration: 0.6 } },
@@ -36,13 +87,33 @@ export default function BlogPost() {
     },
   });
 
+  // --- Conditional Rendering for Loading/Error ---
+  if (loading) {
+    return (
+      <div className="container my-5 text-center">
+        <p>Loading Blog Post Details...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container my-5 text-center text-danger">
+        <p>{error}</p>
+        <button className="btn btn-secondary mt-3" onClick={() => window.history.back()}>Go Back</button>
+      </div>
+    );
+  }
+
+  // --- Main Component Render ---
   return (
     <div className="container my-5">
+      
       {/* Author Info */}
       <div className="d-flex align-items-center justify-content-center mb-4">
         <motion.img
-          src={authorImg}
-          alt="Author"
+          src={getImageUrl(blogPost.senderPhoto)}
+          alt={blogPost.senderName || "Author"}
           className="rounded-circle me-3"
           style={{ width: "50px", height: "50px", objectFit: "cover" }}
           initial="hidden"
@@ -57,9 +128,9 @@ export default function BlogPost() {
           variants={authorTextVariant}
         >
           <p className="mb-0 fw-bold" style={{ fontFamily: "Sen, sans-serif" }}>
-            Andrew Jonson
+            {blogPost.senderName}
           </p>
-          <small className="text-muted">Posted on 27th January 2022</small>
+          <small className="text-muted">Posted on {formatDate(blogPost.createdAt)}</small>
         </motion.div>
       </div>
 
@@ -79,10 +150,10 @@ export default function BlogPost() {
             lineHeight: "1.2",
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          {blogPost.title}
         </h1>
 
-        {/* Category */}
+        {/* Category (Assuming category is not part of your current data model, kept static for now) */}
         <p
           className="text-primary mb-5"
           style={{ fontFamily: "Inter, sans-serif" }}
@@ -100,8 +171,8 @@ export default function BlogPost() {
         transition={{ duration: 0.6 }}
       >
         <img
-          src={authorImg}
-          alt="Post"
+          src={getImageUrl(blogPost.imageUrl)}
+          alt={blogPost.title || "Post"}
           className="img-fluid rounded"
           style={{ maxHeight: "500px", width: "100%", objectFit: "cover" }}
         />
@@ -109,7 +180,7 @@ export default function BlogPost() {
 
       {/* Sections */}
       <article style={{ fontFamily: "Inter, sans-serif", lineHeight: "1.8" }}>
-        {sections.map((section, index) => (
+        {blogPost.content && blogPost.content.map((section, index) => (
           <motion.section
             key={index}
             className="mb-5"
@@ -127,10 +198,11 @@ export default function BlogPost() {
                 color: "#212529",
               }}
             >
-              {section.heading}
+              {section.title}
             </h2>
             <div className="text-muted" style={{ whiteSpace: "pre-line" }}>
-              {section.content.split("\n\n").map((paragraph, i) => (
+              {/* Assuming description contains the main body text */}
+              {section.description.split("\n\n").map((paragraph, i) => (
                 <p key={i} className="mb-4">
                   {paragraph}
                 </p>

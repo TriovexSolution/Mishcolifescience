@@ -21,11 +21,10 @@ const Sidebar = ({ onClose }) => {
     { name: "Add Categories", path: "/admin/addcategories", icon: Plus },
     { name: "Add Product", path: "/admin/addproduct", icon: Plus },
     {name: "Products", path: "/admin/products", icon: Package },
-    { name: "Orders", path: "/admin/orders", icon: ClipboardList },
-    { name: "Instagram", path: "/admin/instagram", icon: Instagram },
-    { name: "Users", path: "/admin/users", icon: Users },
-    { name: "Messages", path: "/admin/contactmessages", icon: MessageCircle },
-    { name: "Trust Meetings", path: "/admin/trustmeetings", icon: Star },
+    {name: "Add Blog", path: "/admin/AddBlog", icon: Plus },
+    { name: "Blog List", path: "/admin/bloglist", icon: List },
+    { name: "Contact List", path: "/admin/contactlist", icon: List },
+    
   ];
 
   return (

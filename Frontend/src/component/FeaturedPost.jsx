@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import img from "../assets/image/Hero1.jpg";
+import axios from "axios"; // Assuming you have 'axios' installed (npm install axios)
+import { Api } from "../api";
+const api = Api;
+// Define an initial state structure
+const initialBlogState = {
+  _id: null,
+  title: "Loading Featured Content...",
+  excerpt: "Fetching the most recent blog post data from the server. Please wait.",
+  imageUrl: null, // Initial state for image
+};
 
 export default function FeaturedPost() {
+  const [latestBlog, setLatestBlog] = useState(initialBlogState);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // --- Data Fetching Logic ---
+  useEffect(() => {
+    const fetchLatestBlog = async () => {
+      // NOTE: Adjust the URL below to match your backend's actual base URL
+      // E.g., if running locally: 'http://localhost:5000/api/blogs/latest'
+      
+      
+      try {
+        const response = await axios.get(`${api}/api/blogs/latest`);
+        
+        if (response.data.success && response.data.title) {
+          setLatestBlog(response.data);
+        } else {
+          // Handle case where API is successful but returns no data
+          setError("No featured blog posts found.");
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching latest blog:", err);
+        setError("Failed to load featured post. Check API connection.");
+        setLoading(false);
+      }
+    };
+    fetchLatestBlog();
+  }, []); // Empty dependency array means this runs only once on mount
+
+  // --- Framer Motion Variants (Unchanged) ---
   const leftVariant = {
     hidden: { x: -100, opacity: 0 },
     visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
@@ -12,6 +52,25 @@ export default function FeaturedPost() {
     hidden: { x: 100, opacity: 0 },
     visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
   };
+
+  // --- Conditional Rendering for Loading/Error ---
+  if (loading) {
+    return (
+      <div className="container-fluid py-5 text-center" style={{ backgroundColor: "#EAF5FF" }}>
+        <p>Loading Featured Post...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container-fluid py-5 text-center text-danger" style={{ backgroundColor: "#EAF5FF" }}>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  // --- Main Component Render ---
   return (
     <div className="container-fluid py-5" style={{ backgroundColor: "#EAF5FF" }}>
       <div className="row align-items-center">
@@ -47,7 +106,8 @@ export default function FeaturedPost() {
               letterSpacing: "-1px",
             }}
           >
-            Lorem ipsum dolor sit amet, <br /> consectetur adipiscing elit
+            {/* DYNAMIC TITLE */}
+            {latestBlog.title}
           </h3>
 
           <p
@@ -60,9 +120,8 @@ export default function FeaturedPost() {
               letterSpacing: "0px",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit.
+            {/* DYNAMIC EXCERPT (description from controller) */}
+            {latestBlog.excerpt}
           </p>
 
           <button
@@ -74,11 +133,23 @@ export default function FeaturedPost() {
               lineHeight: "24px",
               letterSpacing: "0px",
             }}
+            onClick={() => {
+                if (latestBlog._id) {
+                    // 1. Store the blog ID in Session Storage
+                    // Key: 'blogId', Value: the ID of the latest blog post
+                    sessionStorage.setItem('blogId', latestBlog._id); 
+                    
+                    // 2. Navigate to the full blog post page
+                    // We use history.push or window.location.href to navigate
+                    window.location.href = `/singleblog/${latestBlog._id}`; // Example route
+                }
+            }}
           >
             Read More
           </button>
         </motion.div>
 
+        {/* Image Section (slide from right) */}
         {/* Image Section (slide from right) */}
         <motion.div
           className="col-12 col-md-6 d-flex justify-content-center mt-4 mt-md-0 px-0"
@@ -87,20 +158,23 @@ export default function FeaturedPost() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <img
-            src={img}
-            className="img-fluid"
-            alt="featured"
-            style={{
-              maxWidth: "90%",
-              height: "auto",
-              objectFit: "cover",
-              borderRadius: "8px",
-            }}
-          />
-        </motion.div>
-
+          <div style={{ width: '50%', height: '50%', overflow: 'hidden' }}>
+            <img
+              src={latestBlog.imageUrl ? `${api}/${latestBlog.imageUrl.replace(/\\/g, '/')}` : 'placeholder.jpg'}
+              className="img-fluid"
+              alt={latestBlog.title || "Featured Blog Post"}
+              style={{
+                // ⭐ FIX 4: Set image to fill the container and cover the space ⭐
+                width: "100%",
+                height: "100%", 
+                objectFit: "cover", // This is CRUCIAL for maintaining aspect ratio and filling the box
+                display: 'block'
+              }}
+            />
+          </div>
+        </motion.div> 
       </div>
     </div>
   );
 }
+//  src={latestBlog.imageUrl ? `${api}/${latestBlog.imageUrl.replace(/\\/g, '/')}` : 'placeholder.jpg'} 

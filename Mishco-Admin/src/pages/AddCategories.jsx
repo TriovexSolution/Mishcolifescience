@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Api } from "../../api";
 
 export default function CategoryManagement() {
-  const API_URL = import.meta.env.VITE_REACT_APP_API_URL || "";
+  const API_URL = Api;
 
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");

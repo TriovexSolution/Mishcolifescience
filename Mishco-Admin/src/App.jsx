@@ -10,20 +10,23 @@ import {
 // Layout & Components
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
-import AdminRoute from "./components/AuthRoutes";
+// import AdminRoute from "./components/AuthRoutes";
 
 // Admin Pages
 import Dashboard from "./pages/Dashboard";
-import Users from "./pages/Users";
-import Orders from "./pages/Orders";
-import ProductAdmin from "./pages/ProductAdmin";
-import AdminContactMessages from "./pages/AdminMessageShow";
+// import Users from "./pages/Users";
+// import Orders from "./pages/Orders";
+// import ProductAdmin from "./pages/ProductAdmin";
+// import AdminContactMessages from "./pages/AdminMessageShow";
 // Add more pages here...
 
 import { Toaster } from "react-hot-toast";
 import AddProductPage from "./pages/AddProduct";
 import CategoryManagement from "./pages/AddCategories";
 import Products from "./pages/allproduct";
+import AddBlog from "./pages/AddBlog";
+import BlogList from "./pages/BlogList";
+import ContactList from "./pages/ContactList";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -75,14 +78,7 @@ function App() {
                     // </AdminRoute>
                   }
                 />
-                <Route
-                  path="/admin/users"
-                  element={
-                    // <AdminRoute>
-                    <Users />
-                    // </AdminRoute>
-                  }
-                />
+                
                 <Route
                   path="/admin/addproduct"
                   element={
@@ -99,6 +95,31 @@ function App() {
                     // </AdminRoute>
                   }
                 />
+                <Route
+                  path="/admin/bloglist"
+                  element={
+                    // <AdminRoute>
+                    <BlogList />
+                    // </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/contactlist"
+                  element={
+                    // <AdminRoute>
+                    <ContactList />
+                    // </AdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/admin/AddBlog"
+                  element={
+                    // <AdminRoute>
+                    <AddBlog />
+                    // </AdminRoute>
+                  }
+                />
 
                 <Route
                   path="/admin/products"
@@ -108,22 +129,7 @@ function App() {
                     // </AdminRoute>
                   }
                 />
-                <Route
-                  path="/admin/products"
-                  element={
-                    // <AdminRoute>
-                    <ProductAdmin />
-                    // </AdminRoute>
-                  }
-                />
-                <Route
-                  path="/admin/contactmessages"
-                  element={
-                    // <AdminRoute>
-                    <AdminContactMessages />
-                    // </AdminRoute>
-                  }
-                />
+                
 
                 {/* Add more admin routes */}
                 {/* <Route path="/admin/slider" element={<AdminRoute><Slider /></AdminRoute>} /> */}

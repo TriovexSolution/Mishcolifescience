@@ -116,8 +116,8 @@ const productSchema = new mongoose.Schema({
 
   isFeatured: { type: Boolean, default: false },
   productImage: {
-    type: [String],
-    default: ["https://via.placeholder.com/600x600"],
+    type: [String], // Defines the field as an array of strings
+    default: [], // 🚀 CHANGE: Set default to an EMPTY ARRAY
   },
   color: { type: String, trim: true, default: null },
   createdAt: { type: Date, default: Date.now },

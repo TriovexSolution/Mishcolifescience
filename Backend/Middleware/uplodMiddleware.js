@@ -1,14 +1,14 @@
 // config/multer.js
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 
 // Ensure upload directories exist
-const blogDir = 'uploads/blogs';
-const avatarDir = 'uploads/avatars';
-const productDir = 'uploads/products';
+const blogDir = "uploads/blogs";
+const avatarDir = "uploads/avatars";
+const productDir = "uploads/products";
 
-[blogDir, avatarDir, productDir].forEach(dir => {
+[blogDir, avatarDir, productDir].forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -17,13 +17,15 @@ const productDir = 'uploads/products';
 // File filter: only allow images
 const imageFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|gif|webp/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+  const extname = allowedTypes.test(
+    path.extname(file.originalname).toLowerCase()
+  );
   const mimetype = allowedTypes.test(file.mimetype);
 
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb(new Error('Only image files are allowed!'), false);
+    cb(new Error("Only image files are allowed!"), false);
   }
 };
 
@@ -31,29 +33,33 @@ const imageFilter = (req, file, cb) => {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     switch (file.fieldname) {
-      case 'imageUrl':
+      case "imageUrl":
         cb(null, blogDir);
         break;
-      case 'senderPhoto':
+      case "senderPhoto":
         cb(null, avatarDir);
-        break;
-      case 'productImage':
+        break; // === CHANGE STARTS HERE ===
+      case "productImage": // Keep for potential single-image routes or legacy code
+      case "productImages": // <-- NEW: Handles the multiple files field name
         cb(null, productDir);
-        break;
+        break; // === CHANGE ENDS HERE ===
       default:
-        cb(new Error('Invalid field name'));
+        cb(new Error("Invalid field name"));
     }
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
-  }
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`
+    );
+  },
 });
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: imageFilter
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  fileFilter: imageFilter,
 });
 
 export default upload;

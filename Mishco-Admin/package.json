@@ -21,9 +21,11 @@
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.487.0",
     "react": "^19.1.0",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.5.0",
+    "react-toastify": "^11.0.5",
     "recharts": "^2.15.0",
     "swiper": "^11.2.8"
   },
