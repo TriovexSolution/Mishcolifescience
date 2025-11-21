@@ -7,6 +7,7 @@ import AutoScrollLogos from '../component/AutoScrollLogos'
 import TestimonialsSection from '../component/TestimonialsSection'
 import ContactSection from '../component/ContactSection'
 import Footer from '../component/footer'
+import QualityRDSection from '../component/QualityRDSection'
 
 function Homepage() {
   return (
@@ -16,6 +17,7 @@ function Homepage() {
       <AboutMissionPage/>
       <WhyWeStartedSection />
       <AutoScrollLogos />
+      <QualityRDSection />
       <TestimonialsSection />
       <ContactSection />
       {/* <Footer /> */}
