@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Testimonials() {
+  // Testimonial Data focused on the Indian Domestic Market and Key Values
+  const testimonialsData = [
+    {
+      quote: "Mishco's adherence to WHO-GMP and commitment to ethical practice builds immense trust. Their quality assurance protocols ensure patient safety, making them a reliable partner for my practice.",
+      name: "Dr. Aarti Sharma",
+      title: "Consulting Physician, Mumbai, India",
+      avatar: "https://i.pravatar.cc/150?img=47", // Placeholder for avatar
+    },
+    {
+      quote: "The focus on delivering affordable, high-quality branded generics is what sets Mishco apart. Their dedicated team and consistent supply chain are vital for our domestic distribution network.",
+      name: "Rajesh Patel",
+      title: "Pharma Distributor, Gujarat, India",
+      avatar: "https://i.pravatar.cc/150?img=61", // Placeholder for avatar
+    },
+    {
+      quote: "With over 45 years of expertise, Mishco has built a legacy of excellence. We rely on their commitment to timely execution and compliance for our global and domestic sourcing needs.",
+      name: "Sanjay Menon",
+      title: "Sourcing Head, Large Indian Pharma Chain",
+      avatar: "https://i.pravatar.cc/150?img=5", // Placeholder for avatar
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonialsData.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      (prevIndex - 1 + testimonialsData.length) % testimonialsData.length
+    );
+  };
+
+  const currentTestimonial = testimonialsData[currentIndex];
+
   // Variants
   const leftVariant = {
     hidden: { x: -100, opacity: 0 },
@@ -13,13 +49,20 @@ export default function Testimonials() {
     hidden: { x: 100, opacity: 0 },
     visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
   };
+  
+  // Custom variant for the sliding testimonial content
+  const testimonialContentVariant = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, x: -50, transition: { duration: 0.5 } },
+  };
 
   return (
     <div className="container-fluid py-5 px-5 d-flex justify-content-center align-items-center">
       <div className="container-fluid p-4 p-md-5" style={{ backgroundColor: "#e7f1f9" }}>
         <div className="row align-items-center">
 
-          {/* LEFT SECTION */}
+          {/* LEFT SECTION: Introduction */}
           <motion.div
             className="col-12 col-lg-5 border-lg-end p-3 p-md-4 p-lg-5 text-center text-lg-start border-lg-end"
             style={{ fontFamily: "Sen, sans-serif" }}
@@ -36,7 +79,7 @@ export default function Testimonials() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              Testimonials
+              Partner Feedback
             </p>
 
             <h3
@@ -47,8 +90,8 @@ export default function Testimonials() {
                 color: "#272b34",
               }}
             >
-              What people say <br className="d-none d-lg-block" />
-              about our blog
+              Building Trust with <br className="d-none d-lg-block" />
+              Indian Healthcare Professionals
             </h3>
 
             <p
@@ -60,12 +103,11 @@ export default function Testimonials() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor.
+              Our commitment to quality and service is reflected in the strong, ethical relationships we build with doctors and distributors across India.
             </p>
           </motion.div>
 
-          {/* RIGHT SECTION */}
+          {/* RIGHT SECTION: Testimonial Content */}
           <motion.div
             className="col-12 col-lg-7 p-3 p-md-4 p-lg-5"
             style={{ fontFamily: "Sen, sans-serif" }}
@@ -74,7 +116,12 @@ export default function Testimonials() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <p
+            {/* Using a key prop for seamless slide animation */}
+            <motion.p
+              key={currentIndex}
+              variants={testimonialContentVariant}
+              initial="initial"
+              animate="animate"
               className="mb-4 mb-md-5"
               style={{
                 fontSize: "20px",
@@ -83,9 +130,8 @@ export default function Testimonials() {
                 fontWeight: "500",
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+              {currentTestimonial.quote}
+            </motion.p>
 
             {/* PROFILE + ARROWS */}
             <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-4">
@@ -93,8 +139,8 @@ export default function Testimonials() {
               {/* PROFILE */}
               <div className="d-flex align-items-center">
                 <img
-                  src="https://i.pravatar.cc/150?img=11"
-                  alt="Profile"
+                  src={currentTestimonial.avatar}
+                  alt={currentTestimonial.name}
                   className="rounded-circle me-3"
                   width="60"
                   height="60"
@@ -104,7 +150,7 @@ export default function Testimonials() {
                     className="fw-bold m-0"
                     style={{ fontFamily: "Sen, sans-serif", fontSize: "20px" }}
                   >
-                    Jonathan Vallem
+                    {currentTestimonial.name}
                   </h4>
                   <p
                     className="text-muted m-0"
@@ -113,7 +159,7 @@ export default function Testimonials() {
                       fontSize: "14px",
                     }}
                   >
-                    New York, USA
+                    {currentTestimonial.title}
                   </p>
                 </div>
               </div>
@@ -121,7 +167,9 @@ export default function Testimonials() {
               {/* ARROWS */}
               <div className="d-flex gap-3">
                 <button
+                  onClick={handlePrev}
                   className="d-flex align-items-center justify-content-center rounded-circle border-0 shadow-sm"
+                  aria-label="Previous testimonial"
                   style={{
                     width: "55px",
                     height: "55px",
@@ -134,7 +182,9 @@ export default function Testimonials() {
                 </button>
 
                 <button
+                  onClick={handleNext}
                   className="d-flex align-items-center justify-content-center rounded-circle border-0"
+                  aria-label="Next testimonial"
                   style={{
                     width: "55px",
                     height: "55px",

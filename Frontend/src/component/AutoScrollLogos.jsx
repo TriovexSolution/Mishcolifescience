@@ -9,7 +9,7 @@ export default function AutoScrollLogos() {
   const logos = [logo1, logo2, logo3, logo4, logo5];
 
   return (
-    <section className="py-5 bg-white overflow-hidden">
+    <section className="py-5 bg-white overflow-hidden mt-4">
       <div className="container-fluid px-5 overflow-hidden">
         
         <div className="row align-items-center overflow-hidden">

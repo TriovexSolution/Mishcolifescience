@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 export default function ContactSection() {
   return (
@@ -25,7 +26,7 @@ export default function ContactSection() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        Lorem ipsum dolor sit <br /> amet consectetur
+      Partner with a Trusted Name in <br /> Global Healthcare Solutions
       </motion.h2>
 
       {/* Subtitle */}
@@ -41,11 +42,11 @@ export default function ContactSection() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt.
+        Ready to source <strong>GMP compliant branded generic formulations</strong> or establish an export partnership? Our team in <strong>Ahmedabad, India</strong>, is ready to deliver value, quality, and ethical service.
       </motion.p>
 
       {/* Button */}
+      <NavLink to={"contact"}>
       <motion.button
         className="btn"
         style={{
@@ -63,6 +64,7 @@ export default function ContactSection() {
       >
         Contact Us
       </motion.button>
+      </NavLink>
     </div>
   );
 }

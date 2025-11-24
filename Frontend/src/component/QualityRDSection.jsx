@@ -33,25 +33,18 @@ function QualityRDSection() {
             viewport={{ once: true }}
           >
             <div className="h-100 p-4 p-md-5 shadow-lg rounded-3 border-start border-primary border-5">
-              <h3 className="fw-bold text-dark mb-4">Our Foundation of Excellence</h3>
+              <h3 className="fw-bold text-dark mb-4">Global Compliance & Driving Innovation in Healthcare</h3>
 
               <p className="mb-4 text-muted">
-                Quality is the foundation of everything we do at <strong>Mishco
-                Lifescience LLP</strong>. Our products are manufactured in facilities
-                that adhere to <strong>WHO-GMP, ISO, and regulatory standards</strong>,
-                ensuring global compliance and patient safety.
+                Quality is the foundation of everything we do at <strong>Mishco Lifescience LLP</strong>. Our products are manufactured in facilities that adhere to <strong>WHO-GMP, ISO, and regulatory standards</strong> , ensuring global compliance and patient safety.
               </p>
 
               <p className="mb-4 text-muted">
-                Our dedicated <strong>Quality Assurance (QA)</strong> and <strong>Quality Control
-                (QC)</strong> teams oversee every stage — from sourcing raw materials
-                to final product release — through validated processes and
-                <strong>advanced analytical systems</strong>.
+              Our dedicated <strong>Quality Assurance (QA) </strong> and <strong>Quality Control (QC)</strong> teams oversee every stage — from sourcing raw materials to final product release — through validated processes and <strong>advanced analytical systems</strong>.
               </p>
 
               <p className="mb-0 text-muted">
-                Beyond quality, our Research & Development initiatives focus
-                on improving formulations, stability, and patient outcomes.
+                Beyond quality, our <strong>Research & Development</strong> initiatives focus on improving formulations, stability, and patient outcomes. We continuously explore new therapeutic areas to bring <strong>innovative, value-driven healthcare solutions</strong> to the market.
               </p>
             </div>
           </motion.div>

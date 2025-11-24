@@ -1,18 +1,18 @@
 // routes/productRoutes.js
 import express from "express";
-// Ensure this path is correct: 
-// import upload from "../Middleware/uplodMiddleware.js"; 
-import upload from "../Middleware/uplodMiddleware.js"; 
+// Ensure this path is correct:
+// import upload from "../Middleware/uplodMiddleware.js";
+import upload from "../Middleware/uplodMiddleware.js";
 import {
-  createProduct,
-  getProducts,
-  getProductsByCategory,
-  getProductById,
-  updateProduct,
-  deleteProduct,
+  createProduct,
+  getProducts,
+  getProductsByCategory,
+  getProductById,
+  updateProduct,
+  deleteProduct,
   // ⭐ IMPORT NEW FUNCTIONS ⭐
   getCategories,
-  getFilterProducts
+  getFilterProducts,
 } from "../controller/productController.js";
 
 const router = express.Router();
@@ -28,7 +28,6 @@ router.get("/categories", getCategories);
 // READ PRODUCTS WITH SEARCH & CATEGORY FILTER
 router.get("/filter", getFilterProducts);
 // ----------------------------------------------------------------------
-
 
 // READ ALL PRODUCTS (General list, keep if needed)
 router.get("/getall", getProducts);

@@ -41,21 +41,26 @@ const AboutMissionCard = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-uppercase fs-6 fw-semibold text-secondary mb-3">
-              About Us
+              Advancing Healthcare with 45+ Years of Expertise
             </h2>
 
             <h3 className="fw-bold text-dark lh-sm mb-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit sit amet,
-              consectetur
+              Mishco Lifescience LLP: Dynamic Global Pharmaceutical Company
             </h3>
 
-            <p className="text-muted lead mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="text-muted lead mb-4 text-md-justify ">
+              Founded with a mission to make healthcare affordable, reliable,
+              and accessible, Mishco Lifescience LLP is a dynamic pharmaceutical
+              company engaged in the development, marketing, and export of
+              branded generic formulations. We operate with a strong sense of
+              responsibility toward patients and healthcare providers.
             </p>
 
-            
-            <NavLink to="/about" className="text-primary fw-semibold text-decoration-none" style={{ fontSize: "1rem" }}>
+            <NavLink
+              to="/about"
+              className="text-primary fw-semibold text-decoration-none"
+              style={{ fontSize: "1rem" }}
+            >
               Read More →
             </NavLink>
           </motion.div>
@@ -70,18 +75,21 @@ const AboutMissionCard = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-uppercase fs-6 fw-semibold text-secondary mb-3">
-              Our Mission
+              Our Vision & Mission
             </h2>
 
             <h3 className="fw-bold text-dark lh-sm mb-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              Delivering Quality, Affordable Healthcare to Every Individual
             </h3>
 
-            <p className="text-muted small lh-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+            <p className="text-muted lead mb-4">
+              <strong>Our Vision:</strong> To become a globally recognized
+              healthcare company known for trust, innovation, and excellence.{" "}
+              <br />
+              <br />
+              <strong>Our Mission:</strong> To make quality healthcare
+              affordable for every individual and to deliver value-driven
+              partnerships across the pharmaceutical ecosystem.
             </p>
           </motion.div>
         </div>

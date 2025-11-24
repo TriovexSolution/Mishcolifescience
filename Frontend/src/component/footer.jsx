@@ -1,8 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/image/footerlogo.png";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+// Assuming Api holds your base URL like `http://localhost:5000`
+import { Api } from "../api";
+
+// ⭐ Backend Endpoint Configuration ⭐
+const API_BASE_URL = Api;
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(""); // Simple email validation
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setMessage("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // ⭐ API CALL TO SUBSCRIPTION ENDPOINT ⭐
+      const response = await axios.post(
+        `${API_BASE_URL}/api/subscribe/subscribe`,
+        { email }
+      );
+
+      if (response.data.success) {
+        setMessage(
+          "🎉 Successfully subscribed! Check your email for confirmation."
+        );
+        setEmail(""); // Clear input on success
+      } else {
+        // Handle backend validation/duplicate email errors
+        setMessage(
+          response.data.message || "Subscription failed. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Subscription error:", error); // Handle network/server errors
+      setMessage(
+        "An error occurred. Please check your connection or try later."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer
       style={{
@@ -17,10 +66,13 @@ export default function Footer() {
         {/* TOP: LOGO + MENU */}
         <div className="row align-items-center mb-5 text-center text-md-start">
           {/* Logo */}
-          <div className="col-lg-6 col-md-12 mb-3 mb-md-0 d-flex justify-content-center justify-content-md-start">
-            <img src={logo} alt="Mishco" style={{ height: "55px" }} />
+          <div className="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex justify-content-center justify-content-md-start">
+            <img
+              src={logo}
+              alt="Mishco Lifescience LLP Logo"
+              style={{ height: "55px" }}
+            />
           </div>
-
           {/* Menu */}
           <div className="col-lg-6 col-md-12">
             <ul
@@ -36,28 +88,30 @@ export default function Footer() {
               <NavLink to="/" className="nav-link ">
                 <li>Home</li>
               </NavLink>
-              <NavLink to="/blog" className="nav-link ">
-                <li>Blog</li>
+
+              <NavLink to="/products" className="nav-link ">
+                <li>Products</li>
               </NavLink>
+
               <NavLink to="/about" className="nav-link ">
-                <li>About us</li>
+                <li>About Us</li>
               </NavLink>
+
               <NavLink to="/contact" className="nav-link ">
-                <li>Contact us</li>
+                <li>Contact</li>
               </NavLink>
-              <NavLink to="/privacypolicy" className="nav-link ">
-                <li>Privacy Policy</li>
+
+              <NavLink to="/careers" className="nav-link ">
+                <li>Careers</li>
               </NavLink>
             </ul>
           </div>
         </div>
-
         {/* NEWSLETTER SECTION */}
         <div
-          className="rounded"
+          className="rounded p-4 p-md-5" // Added p-md-5 for desktop padding
           style={{
             backgroundColor: "rgba(255,255,255,0.1)",
-            padding: "40px 25px",
           }}
         >
           <div className="row align-items-center text-center text-md-start">
@@ -65,69 +119,263 @@ export default function Footer() {
             <div className="col-md-6 mb-4 mb-md-0">
               <h2
                 style={{
-                  fontWeight: 700,
-                  fontSize: "30px",
-                  lineHeight: "42px",
+                  fontWeight: 700, // Adjusted font size to scale better on mobile
+                  fontSize: "clamp(24px, 4vw, 30px)",
+                  lineHeight: "1.3",
                   fontFamily: "Sen, sans-serif",
                 }}
               >
-                Subscribe to our newsletter to get latest updates and news
+                Get updates on new products and partnerships from Mishco
               </h2>
             </div>
-
-            {/* Input + Button */}
+            {/* Input + Button (Subscription Form) */}
             <div className="col-md-6">
-              <div className="d-flex flex-column flex-sm-row w-100 gap-3 text-light">
-                <input
-                  type="email"
-                  placeholder="Enter Your Email"
-                  className="flex-grow-1"
-                  style={{
-                    height: "50px",
-                    padding: "0 15px",
-                    borderRadius: "3px",
-                    border: "1px solid #fff",
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                />
+              <form onSubmit={handleSubscribe}>
+                {/* ⭐ IMPROVEMENT: Use 'flex-column' on small screens, 'flex-sm-row' on small-to-up ⭐ */}
 
-                <button
-                  className="btn rounded-0"
+                <div className="d-flex flex-column flex-sm-row w-100 gap-3 text-light">
+                  <input
+                    type="email"
+                    placeholder="Enter Your Email"
+                    className="flex-grow-1"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    style={{
+                      height: "50px",
+                      padding: "0 15px",
+                      borderRadius: "3px",
+                      border: "1px solid #fff",
+                      backgroundColor: "transparent",
+                      color: "white", // Ensure placeholder text is visible
+                      "::placeholder": { color: "rgba(255, 255, 255, 0.7)" },
+                    }}
+                  />
+
+                  <button
+                    type="submit"
+                    className="btn w-100 w-sm-auto rounded-0" // ⭐ IMPROVEMENT: w-100 on mobile, auto width on small-to-up ⭐
+                    disabled={loading}
+                    style={{
+                      backgroundColor: "white",
+                      color: "#1E5BA3", // Changed text color to match background for contrast
+                      height: "50px",
+                      padding: "0 25px",
+                      fontWeight: 600,
+                      fontFamily: "Sen, sans-serif",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {loading ? "Subscribing..." : "Subscribe"}
+                  </button>
+                </div>
+              </form>
+              {/* Subscription Status Message */}
+              {message && (
+                <p
+                  className="mt-3 text-center text-sm-start" // ⭐ IMPROVEMENT: Center text on mobile, align left on small-to-up ⭐
                   style={{
-                    backgroundColor: "white",
-                    color: "black",
-                    height: "50px",
-                    padding: "0 25px",
-                    fontWeight: 600,
-                    fontFamily: "Sen, sans-serif",
-                    whiteSpace: "nowrap",
+                    fontSize: "14px", // Adjusting success/error color for better visibility against dark background
+                    color: message.startsWith("🎉") ? "#90EE90" : "#FA8072",
                   }}
                 >
-                  Subscribe
-                </button>
-              </div>
+                  {message}
+                </p>
+              )}
             </div>
           </div>
         </div>
-
-        {/* ADDRESS + SOCIALS */}
+        {/* ADDRESS + CONTACTS + SOCIALS */}
         <div className="row mt-5 text-center text-md-start">
-          <div className="col-md-6 mb-3 mb-md-0">
-            <p style={{ margin: 0, opacity: 0.9 }}>
-              Finstreet 118 2561 Fintown
+          <div className="col-md-6 mb-4 mb-md-0">
+            {/* Adjusted margin for better spacing on mobile */}
+            {/* Corporate Office Address */}
+            <p style={{ margin: 0, opacity: 0.9, fontWeight: 600 }}>
+              Mishco Lifescience LLP
             </p>
-            <p style={{ margin: 0, opacity: 0.9 }}>
-              Hello@finsweet.com &nbsp;&nbsp; 020 7993 2905
-            </p>
-          </div>
 
+            <p style={{ margin: "5px 0 0 0", opacity: 0.9 }}>
+              Ahmedabad, Gujarat, India
+            </p>
+            {/* Phone Contacts */}
+            <p style={{ margin: "10px 0 0 0", opacity: 0.9, fontSize: "15px" }}>
+              📞 Contact:
+              <a
+                href="tel:+918980007080"
+                style={{
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                }}
+              >
+                8980007080
+              </a>
+              ,
+              <a
+                href="tel:+918980001090"
+                style={{
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                }}
+              >
+                8980001090
+              </a>
+            </p>
+            {/* Email Contacts */}
+            <div style={{ marginTop: "3px" }} className="align-item-center">
+              <p className="mb-1 align-item-center my-auto" style={{ opacity: 0.9, fontSize: "15px" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-label="Gmail"
+                  role="img"
+                  viewBox="0 0 512 512"
+                  width="25"
+                  height="25"
+                >
+                  <rect width="512" height="512" rx="15%" fill="none" />
+                  <path
+                    d="M158 391v-142l-82-63V361q0 30 30 30"
+                    fill="#4285f4"
+                  />
+                  <path
+                    d="M 154 248l102 77l102-77v-98l-102 77l-102-77"
+                    fill="#ea4335"
+                  />
+                  <path d="M354 391v-142l82-63V361q0 30-30 30" fill="#34a853" />
+                  <path
+                    d="M76 188l82 63v-98l-30-23c-27-21-52 0-52 26"
+                    fill="#c5221f"
+                  />
+                  <path
+                    d="M436 188l-82 63v-98l30-23c27-21 52 0 52 26"
+                    fill="#fbbc04"
+                  />
+                </svg>
+                Domestic Enquiry:
+                <a
+                  href="mailto:Info@mishcolife.com"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  Info@mishcolife.com
+                </a>
+              </p>
+
+              <p className="mb-1" style={{ opacity: 0.9, fontSize: "15px" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-label="Gmail"
+                  role="img"
+                  viewBox="0 0 512 512"
+                  width="25"
+                  height="25"
+                >
+                  <rect width="512" height="512" rx="15%" fill="none" />
+                  <path
+                    d="M158 391v-142l-82-63V361q0 30 30 30"
+                    fill="#4285f4"
+                  />
+                  <path
+                    d="M 154 248l102 77l102-77v-98l-102 77l-102-77"
+                    fill="#ea4335"
+                  />
+                  <path d="M354 391v-142l82-63V361q0 30-30 30" fill="#34a853" />
+                  <path
+                    d="M76 188l82 63v-98l-30-23c-27-21-52 0-52 26"
+                    fill="#c5221f"
+                  />
+                  <path
+                    d="M436 188l-82 63v-98l30-23c27-21 52 0 52 26"
+                    fill="#fbbc04"
+                  />
+                </svg>
+                International Enquiry:
+                <a
+                  href="mailto:nikhil@mishcolife.com"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  nikhil@mishcolife.com
+                </a>
+              </p>
+
+              <p className="mb-0" style={{ opacity: 0.9, fontSize: "15px" }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-label="Gmail"
+                  role="img"
+                  viewBox="0 0 512 512"
+                  width="25"
+                  height="25"
+                >
+                  <rect width="512" height="512" rx="15%" fill="none" />
+                  <path
+                    d="M158 391v-142l-82-63V361q0 30 30 30"
+                    fill="#4285f4"
+                  />
+                  <path
+                    d="M 154 248l102 77l102-77v-98l-102 77l-102-77"
+                    fill="#ea4335"
+                  />
+                  <path d="M354 391v-142l82-63V361q0 30-30 30" fill="#34a853" />
+                  <path
+                    d="M76 188l82 63v-98l-30-23c-27-21-52 0-52 26"
+                    fill="#c5221f"
+                  />
+                  <path
+                    d="M436 188l-82 63v-98l30-23c27-21 52 0 52 26"
+                    fill="#fbbc04"
+                  />
+                </svg>
+                Procurement:
+                <a
+                  href="mailto:purchase@mishcolife.com"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  purchase@mishcolife.com
+                </a>
+              </p>
+            </div>
+          </div>
           {/* SOCIAL ICONS */}
-          <div className="col-md-6 d-flex justify-content-center justify-content-md-end gap-4 mt-3 mt-md-0">
-            <i className="bi bi-facebook"></i>
-            <i className="bi bi-twitter"></i>
-            <i className="bi bi-instagram"></i>
-            <i className="bi bi-linkedin"></i>
+          {/* ⭐ IMPROVEMENT: Added align-self-stretch and use flex-column-reverse on mobile to put icons above contacts if needed ⭐ */}
+
+          <div className="col-md-6 d-flex justify-content-center justify-content-md-end gap-4 mt-4 mt-md-0 align-items-md-end align-self-stretch">
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/company/mishco-lifescience/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "white" }}
+            >
+              <i className="bi bi-linkedin fs-5"></i>
+            </a>
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/mishco_lifescience?igsh=MTdvdWdmamtuMjA5ZQ%3D%3D&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "white" }}
+            >
+              <i className="bi bi-instagram fs-5"></i>
+            </a>
+            {/* Facebook */}
+            <a
+              href="https://www.facebook.com/MishcoLifescienceLLP"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "white" }}
+            >
+              <i className="bi bi-facebook fs-5"></i>
+            </a>
+          </div>
+        </div>
+        {/* COPYRIGHT */}
+        <div className="row mt-4 pt-3 border-top border-light border-opacity-25">
+          <div className="col-12 text-center">
+            <p className="mb-0" style={{ opacity: 0.7, fontSize: "14px" }}>
+              © {new Date().getFullYear()} Mishco Lifescience LLP. All rights
+              reserved.
+            </p>
           </div>
         </div>
       </div>

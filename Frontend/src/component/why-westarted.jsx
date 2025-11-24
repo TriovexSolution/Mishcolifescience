@@ -1,6 +1,7 @@
 import React from "react";
 import img1 from "../assets/image/whywestarted.jpg";
 import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 const WhyWeStartedSection = () => {
   const leftVariant = {
     hidden: { x: -100, opacity: 0 },
@@ -46,7 +47,7 @@ const WhyWeStartedSection = () => {
           {/* TEXT CARD */}
           <div className="col-6 col-lg-4 bg-white p-4 p-lg-5  why-text-card">
             <motion.div
-            className="col-12 col-lg-8"
+              className="col-12 col-lg-8"
               variants={rightVariant}
               initial="hidden"
               whileInView="visible"
@@ -61,7 +62,7 @@ const WhyWeStartedSection = () => {
                   lineHeight: "20px",
                 }}
               >
-                Why We Started
+                OUR CORE MISSION
               </h3>
 
               <h1
@@ -73,8 +74,7 @@ const WhyWeStartedSection = () => {
                   lineHeight: "64px",
                 }}
               >
-                Lorem ipsum dolor sit <br /> amet, consectetur <br />
-                adipiscing elit
+              Quality Health, Accessible Worldwide
               </h1>
 
               <p
@@ -86,26 +86,23 @@ const WhyWeStartedSection = () => {
                   lineHeight: "28px",
                 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod <br />
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                minim <br />
-                veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip.
+                Founded with a mission to make healthcare affordable, reliable,
+                and accessible. Mishco Lifescience LLP is a dynamic
+                pharmaceutical company engaged in the development, marketing,
+                and export of **branded generic formulations. We operate with a
+                strong sense of responsibility toward patients and healthcare
+                providers, ensuring every product meets the highest standards of
+                quality, safety, and therapeutic value.
               </p>
 
-              <a
-                href="#"
-                className="btn btn-primary px-4 py-2 fw-semibold bg-[#246CB3] px-4 py-3 rounded-0"
+              
+              <NavLink to={"contact"} className="btn btn-primary px-4 py-2 fw-semibold bg-[#246CB3] px-4 py-3 rounded-0"
                 style={{
                   fontFamily: "Sen ,sans-serif",
                   fontWeight: "700",
                   fontSize: "18px",
                   lineHeight: "24px",
-                }}
-              >
-                Contact Us
-              </a>
+                }}>Conatct Us</NavLink>
             </motion.div>
           </div>
         </div>

@@ -99,9 +99,8 @@ const Contact = () => {
 
       toast.success(
         response.data.message || "Thank you! Your message has been sent."
-      );
+      ); // Reset form
 
-      // Reset form
       setFormData({
         fullName: "",
         email: "",
@@ -122,11 +121,10 @@ const Contact = () => {
   return (
     <>
       <ToastContainer position="top-right" autoClose={5000} />
-
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-8 col-xl-7">
-            {/* Header Section */}
+            {/* Header Section - SEO UPDATED */}
             <motion.div
               className="text-center mb-5"
               variants={fadeUp}
@@ -134,20 +132,23 @@ const Contact = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <div style={styles.sectionLabel}>CONTACT US</div>
+              <div style={styles.sectionLabel}>
+                CONNECT WITH MISHCO LIFESCIENCE LLP
+              </div>
               <h1 className="fw-bold" style={styles.mainHeading}>
-                Let's Start a Conversation
+                Global Pharma Inquiries & Partnership Opportunities
               </h1>
               <p
                 className="text-muted small mt-3"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Use the form below to connect with our dedicated team in
+                Ahmedabad, India. Whether you are interested in export,
+                customized branded generics, regulatory support, or general
+                business inquiries, we are ready to assist.
               </p>
             </motion.div>
-
-            {/* Info Box (Red Section) */}
+            {/* Info Box (Red Section) - UPDATED CONTACT DETAILS */}
             <motion.div
               className="row g-0 mb-5"
               style={{
@@ -166,35 +167,33 @@ const Contact = () => {
                   className="text-uppercase small fw-bold mb-3"
                   style={{ opacity: 0.7, fontFamily: "Inter, sans-serif" }}
                 >
-                  Working hours
+                  Office Hours (IST)
                 </p>
-                <p style={styles.infoDetail}>Monday To Friday</p>
-                <p style={styles.infoHours}>9:00 AM to 8:00 PM</p>
+                <p style={styles.infoDetail}>Monday to Saturday</p>
+                <p style={styles.infoHours}>9:30 AM to 6:30 PM</p>
                 <p
                   className="small mt-3"
                   style={{ opacity: 0.8, fontFamily: "Inter, sans-serif" }}
                 >
-                  Our Support Team is available 24/7
+                  Reach out anytime; we monitor inquiries 24/7.
                 </p>
               </div>
-
               <div className="col-md-6 p-4 ps-md-5">
                 <p
                   className="text-uppercase small fw-bold mb-3"
                   style={{ opacity: 0.7, fontFamily: "Inter, sans-serif" }}
                 >
-                  Contact Us
+                  Phone & Email
                 </p>
-                <p style={styles.infoDetail}>020 7993 2905</p>
+                <p style={styles.infoDetail}>+91-8980001090</p>
                 <p
                   className="small"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  hello@finsweet.com
+                  info@mishcolife.com
                 </p>
               </div>
             </motion.div>
-
             {/* Contact Form */}
             <motion.form
               onSubmit={handleSubmit}
@@ -215,7 +214,6 @@ const Contact = () => {
                   required
                 />
               </div>
-
               <div className="mb-3">
                 <input
                   type="email"
@@ -228,9 +226,8 @@ const Contact = () => {
                   required
                 />
               </div>
-
               <div className="mb-3">
-                {/* // src/components/Contact.jsx  ← THIS ONE WORKS 100% */}
+                {/* Updated options to reflect business interests */}
                 <select
                   name="queryType"
                   className="form-select"
@@ -239,14 +236,21 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="Technical Support">Technical Support</option>
-                  <option value="Partnership">Partnership</option>
-                  <option value="Feedback">Feedback</option>
+                  <option value="Export Inquiry">
+                    Export & International Inquiry
+                  </option>
+                  <option value="Manufacturing & Custom Formulation">
+                    Manufacturing & Custom Formulation
+                  </option>
+                  <option value="Regulatory & Documentation Support">
+                    Regulatory & Documentation Support
+                  </option>
+                  <option value="General Inquiry">
+                    General Business Inquiry
+                  </option>
                   <option value="Other">Other</option>
                 </select>
               </div>
-
               <div className="mb-4">
                 <textarea
                   name="message"
@@ -265,7 +269,6 @@ const Contact = () => {
                   required
                 ></textarea>
               </div>
-
               <button
                 type="submit"
                 disabled={loading}

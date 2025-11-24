@@ -3,30 +3,30 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // IMPORT IMAGES
 import hero1 from "../assets/image/Hero1.jpg";
-import hero2 from "../assets/image/Hero2.png";
-import hero3 from "../assets/image/Hero3.png";
+import hero2 from "../assets/image/hero2.jpg";
+import hero3 from "../assets/image/hero4.png";
 
 const slides = [
   {
     id: 1,
-    img: hero1,
-    tag: "Posted on startup",
-    title: "Step-by-step guide to choosing great font pairs",
-    desc: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    img: hero2,
+    tag: "Global Healthcare",
+    title: "Quality, Trust, and 45+ Years of Experience",
+    desc: "We are driven by a single purpose: to make quality healthcare accessible and affordable worldwide. Headquartered in Ahmedabad, India.Z",
   },
   {
     id: 2,
-    img: hero2,
-    tag: "User Interface",
-    title: "Designing clean UI layouts with perfect spacing",
-    desc: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.",
+    img: hero1,
+    tag: "Branded Generics",
+    title: "Trusted Branded Generics, Global Footprint",
+    desc: "Leading the branded generic market with a strong domestic and rapidly growing global presence.",
   },
   {
     id: 3,
     img: hero3,
-    tag: "Branding",
-    title: "Improve brand identity with strong visuals",
-    desc: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.",
+    tag: "Quality & Access",
+    title: "Quality, Innovation, and Accessibility Focused",
+    desc: "Dedicated to quality, innovation, and accessibility, backed by WHO-GMP compliant facilities.",
   },
 ];
 

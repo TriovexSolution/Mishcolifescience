@@ -30,6 +30,33 @@ const imageFilter = (req, file, cb) => {
 };
 
 // Storage config
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     switch (file.fieldname) {
+//       case "imageUrl":
+//         cb(null, blogDir);
+//         break;
+//       case "senderPhoto":
+//         cb(null, avatarDir);
+//         break; // === CHANGE STARTS HERE ===
+//       case "productImage": // Keep for potential single-image routes or legacy code
+//       case "productImages": // <-- NEW: Handles the multiple files field name
+//         cb(null, productDir);
+//         break; // === CHANGE ENDS HERE ===
+//       default:
+//         cb(new Error("Invalid field name"));
+//     }
+//   },
+//   filename: (req, file, cb) => {
+//     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+//     cb(
+//       null,
+//       `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`
+//     );
+//   },
+// });
+
+// config/multer.js (updated destination)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     switch (file.fieldname) {
@@ -38,21 +65,22 @@ const storage = multer.diskStorage({
         break;
       case "senderPhoto":
         cb(null, avatarDir);
-        break; // === CHANGE STARTS HERE ===
-      case "productImage": // Keep for potential single-image routes or legacy code
-      case "productImages": // <-- NEW: Handles the multiple files field name
+        break;
+      case "productImage":       // single-file legacy
+      case "productImages":      // multi-file
+      case "images":             // accept a common alternative name
+      case "files":              // optional fallback name
         cb(null, productDir);
-        break; // === CHANGE ENDS HERE ===
+        break;
       default:
-        cb(new Error("Invalid field name"));
+        // FALLBACK: don't abort — save to productDir but log it for visibility
+        console.warn("Multer: unexpected fieldname:", file.fieldname);
+        cb(null, productDir);
     }
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`
-    );
+    cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
   },
 });
 
