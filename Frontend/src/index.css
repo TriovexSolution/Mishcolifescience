@@ -208,3 +208,15 @@ a:focus, button:focus {
   outline-offset: 2px;
 }
 
+/* Hide horizontal scroll ONLY on mobile */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+    width: 100%;
+  }
+
+  * {
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+}

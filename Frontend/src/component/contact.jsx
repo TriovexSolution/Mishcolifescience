@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { Api } from "../api";
+const api = Api;
 const Contact = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -93,7 +94,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/contact/addcontact`,
+        `${api}/api/contact/addcontact`,
         formData
       );
 
@@ -185,12 +186,49 @@ const Contact = () => {
                 >
                   Phone & Email
                 </p>
+
+                {/* Phone */}
                 <p style={styles.infoDetail}>+91-8980001090</p>
+
+                {/* General Email */}
                 <p
                   className="small"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  info@mishcolife.com
+                  <a
+                    href="mailto:info@mishcolife.com"
+                    className="text-decoration-none text-white"
+                  >
+                    info@mishcolife.com
+                  </a>
+                </p>
+
+                {/* International Enquiry */}
+                <p
+                  className="small"
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  International Enquiry:&nbsp;
+                  <a
+                    href="mailto:nikhil@mishcolife.com"
+                    className="text-decoration-none text-white"
+                  >
+                    nikhil@mishcolife.com
+                  </a>
+                </p>
+
+                {/* Procurement */}
+                <p
+                  className="small"
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                >
+                  Procurement:&nbsp;
+                  <a
+                    href="mailto:purchase@mishcolife.com"
+                    className="text-decoration-none text-white"
+                  >
+                    purchase@mishcolife.com
+                  </a>
                 </p>
               </div>
             </motion.div>
@@ -236,18 +274,12 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option value="Export Inquiry">
-                    Export & International Inquiry
-                  </option>
-                  <option value="Manufacturing & Custom Formulation">
-                    Manufacturing & Custom Formulation
-                  </option>
-                  <option value="Regulatory & Documentation Support">
-                    Regulatory & Documentation Support
-                  </option>
                   <option value="General Inquiry">
                     General Business Inquiry
                   </option>
+                  <option value="Partnership">Partnership Inquiry</option>
+                  <option value="Technical Support">Technical Support</option>
+                  <option value="Feedback">Feedback</option>
                   <option value="Other">Other</option>
                 </select>
               </div>

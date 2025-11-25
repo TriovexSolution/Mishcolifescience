@@ -3,7 +3,7 @@ import heroImg from "../assets/image/Hero1.jpg";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure bootstrap CSS is imported if using utility classes
 
-const AboutPage = () => {
+const  AboutPage = () => {
   const colors = {
     textDark: "#212529",
     textGrey: "#6c757d",
@@ -133,6 +133,12 @@ const AboutPage = () => {
         z-index: 1;
        }
       }
+       @media (max-width: 768px) {
+  .about-right-box p {
+    text-align: center !important;
+  }
+}
+
      `}
       </style>
       {/* ------------ HEADER SECTION (Updated) ------------- */}

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // IMPORT IMAGES
-import hero1 from "../assets/image/Hero1.jpg";
+import hero1 from "../assets/image/product/hero6.png";
 import hero2 from "../assets/image/hero2.jpg";
-import hero3 from "../assets/image/hero4.png";
+import hero3 from "../assets/image/hero5.jpg";
 
 const slides = [
   {
@@ -12,7 +12,7 @@ const slides = [
     img: hero2,
     tag: "Global Healthcare",
     title: "Quality, Trust, and 45+ Years of Experience",
-    desc: "We are driven by a single purpose: to make quality healthcare accessible and affordable worldwide. Headquartered in Ahmedabad, India.Z",
+    desc: "We are driven by a single purpose: to make quality healthcare accessible and affordable worldwide. Headquartered in Ahmedabad, India.",
   },
   {
     id: 2,
@@ -200,6 +200,69 @@ export default function Hero() {
           }
           .hero-lead { margin-bottom: 1.25rem; }
         }
+          .hero-section {
+  min-height: 100vh;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* ---------- MOBILE ONLY (≤ 576px) ---------- */
+@media (max-width: 576px) {
+
+  /* Reduce hero height for mobile */
+  .hero-section {
+    min-height: 75vh;
+    padding: 1.5rem 0 2rem 0;
+    overflow-x: hidden !important;
+  }
+
+  /* Background scaling fix */
+  .hero-section > div {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  /* Container spacing fix */
+  .hero-content {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+    text-align: left;
+  }
+
+  /* Smaller title for mobile */
+  .hero-title {
+    font-size: 1.6rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  /* Description text responsive */
+  .hero-lead {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1.1rem !important;
+    max-width: 95% !important;
+  }
+
+  /* Tag */
+  .hero-section p.text-uppercase {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.6rem !important;
+  }
+
+  /* Button mobile styling */
+  .hero-section .btn {
+    padding: 0.7rem 1.7rem !important;
+    font-size: 0.9rem !important;
+    border-radius: 50px !important;
+  }
+
+  /* Slider Dots */
+  .hero-section .bottom-0 {
+    bottom: 10px !important;
+  }
+}
+
       `}</style>
     </section>
   );
