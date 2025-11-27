@@ -17,7 +17,7 @@ import {
 
 const router = express.Router();
 
-// CREATE PRODUCT (with multiple images)
+// CREATE PRODUCT (with multiple images) 
 router.post("/add", upload.array("productImages", 10), createProduct);
 
 // ----------------------------------------------------------------------

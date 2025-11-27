@@ -41,7 +41,7 @@ const AboutMissionCard = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-uppercase fs-6 fw-semibold text-secondary mb-3">
-              Advancing Healthcare with 45+ Years of Expertise
+              Mishco Lifescience LLP: Trusted Leader in Global Branded Generics
             </h2>
 
             <h3 className="fw-bold text-dark lh-sm mb-3">
@@ -49,11 +49,15 @@ const AboutMissionCard = () => {
             </h3>
 
             <p className="text-muted lead mb-4 text-md-justify ">
-              Founded with a mission to make healthcare affordable, reliable,
-              and accessible, Mishco Lifescience LLP is a dynamic pharmaceutical
-              company engaged in the development, marketing, and export of
-              branded generic formulations. We operate with a strong sense of
-              responsibility toward patients and healthcare providers.
+              With a legacy built on quality, integrity, and scientific
+              excellence, Mishco Lifescience LLP is a trusted Ahmedabad-based
+              pharmaceutical company specializing in the development, marketing,
+              and export of branded generics and nutraceuticals. Committed to
+              making healthcare affordable and accessible worldwide, we deliver
+              formulations that meet stringent regulatory standards, ensuring
+              safety, efficacy, and patient well-being. Our consistency,
+              transparency, and ethical approach have earned lasting trust from
+              healthcare professionals and partners across markets.
             </p>
 
             <NavLink
@@ -79,17 +83,21 @@ const AboutMissionCard = () => {
             </h2>
 
             <h3 className="fw-bold text-dark lh-sm mb-3">
-              Delivering Quality, Affordable Healthcare to Every Individual
+              Delivering Quality, Accessible, and Affordable Healthcare for All
             </h3>
 
             <p className="text-muted lead mb-4">
-              <strong>Our Vision:</strong> To become a globally recognized
-              healthcare company known for trust, innovation, and excellence.{" "}
+              <strong>Our Vision:</strong> To emerge as a globally respected
+              healthcare organization recognized for innovation, trust, and
+              unwavering excellence in the pharmaceutical and nutraceutical
+              sectors.
               <br />
               <br />
-              <strong>Our Mission:</strong> To make quality healthcare
-              affordable for every individual and to deliver value-driven
-              partnerships across the pharmaceutical ecosystem.
+              <strong>Our Mission:</strong> To make high-quality, affordable
+              healthcare accessible to every individual and to build long-term,
+              value-driven partnerships within the global pharmaceutical
+              ecosystem through ethical practices, scientific advancement, and
+              customer-centric solutions.
             </p>
           </motion.div>
         </div>

@@ -1,44 +1,42 @@
- import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // IMPORT IMAGES
-import hero1 from "../assets/image/product/hero6.png";
-import hero2 from "../assets/image/hero2.jpg";
-import hero3 from "../assets/image/hero5.jpg";
+import hero1 from "../assets/image/hero7.png";
+import hero2 from "../assets/image/hero8.jpg";
+import hero3 from "../assets/image/hero8.png";
 
+// SLIDES DATA
 const slides = [
   {
     id: 1,
-    img: hero2,
+    img: hero1,
     tag: "Global Healthcare",
     title: "Quality, Trust, and 45+ Years of Experience",
     desc: "We are driven by a single purpose: to make quality healthcare accessible and affordable worldwide. Headquartered in Ahmedabad, India.",
   },
   {
     id: 2,
-    img: hero1,
+    img: hero2,
     tag: "Branded Generics",
     title: "Trusted Branded Generics, Global Footprint",
-    desc: "Leading the branded generic market with a strong domestic and rapidly growing global presence.",
+    desc: "Leading the branded generic market with a strong domestic and rapidly growing global presence。",
   },
   {
     id: 3,
     img: hero3,
-    tag: "Quality & Access",
+    tag: "质量 & Access",
     title: "Quality, Innovation, and Accessibility Focused",
-    desc: "Dedicated to quality, innovation, and accessibility, backed by WHO-GMP compliant facilities.",
+    desc: "Dedicated to quality, innovation, and accessibility, backed by WHO-GMP compliant facilities。",
   },
 ];
 
-// TEXT ANIMATION VARIANTS
+// ANIMATION VARIANTS
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.25,
-      ease: "easeOut",
-    },
+    transition: { staggerChildren: 0.25, ease: "easeOut" },
   },
 };
 
@@ -47,15 +45,20 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.9,
-      ease: [0.16, 1, 0.3, 1],
-    },
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+
+  // 🔥 Preload images
+  useEffect(() => {
+    slides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.img;
+    });
+  }, []);
 
   // Auto-slide every 5 seconds
   useEffect(() => {
@@ -65,41 +68,29 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  // Memoize current slide
+  const slide = useMemo(() => slides[index], [index]);
+
   return (
     <section className="position-relative overflow-hidden hero-section">
-
-      {/* BACKGROUND IMAGE (NO FADE BETWEEN SLIDES) */}
+      {/* BACKGROUND */}
       <div
-        className="position-absolute top-0 start-0 w-100 h-100"
+        className="hero-bg position-absolute top-0 start-0 w-100 h-100"
         style={{
-          zIndex: 1,
-          backgroundImage: `url(${slides[index].img})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          transition: "background-image 0s", // NO FADE
+          backgroundImage: `url(${slide.img})`,
         }}
       />
 
-      {/* BLACK OVERLAY */}
-      <div
-        className="position-absolute top-0 start-0 w-100 h-100"
-        style={{
-          background: "rgba(0,0,0,0.55)",
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      />
+      {/* OVERLAY */}
+      <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100" />
 
       {/* TEXT CONTENT */}
-      <div
-        className="position-relative d-flex align-items-end justify-content-end h-100 container-fluid px-5 hero-content"
-        style={{ zIndex: 2 }}
-      >
+      <div className="position-relative container-fluid h-100 px-5 hero-content d-flex align-items-end justify-content-end">
         <div className="row w-100">
           <div className="col-12 col-lg-7 col-xl-6 text-white py-5">
             <AnimatePresence mode="wait">
               <motion.div
-                key={slides[index].id + "-text"}
+                key={slide.id}
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -107,50 +98,26 @@ export default function Hero() {
               >
                 {/* TAG */}
                 <motion.p
-                  className="text-uppercase fw-bold mb-3"
-                  style={{
-                    fontSize: "clamp(0.75rem, 1vw, 1rem)",
-                    letterSpacing: "2px",
-                  }}
+                  className="hero-tag text-uppercase fw-bold mb-3"
                   variants={itemVariants}
                 >
-                  {slides[index].tag}
+                  {slide.tag}
                 </motion.p>
 
                 {/* TITLE */}
-                <motion.h1
-                  className="fw-bold mb-4 hero-title"
-                  style={{
-                    fontSize: "clamp(1.8rem, 4vw, 3.8rem)",
-                    lineHeight: "1.15",
-                  }}
-                  variants={itemVariants}
-                >
-                  {slides[index].title}
+                <motion.h1 className="hero-title fw-bold mb-4" variants={itemVariants}>
+                  {slide.title}
                 </motion.h1>
 
                 {/* DESCRIPTION */}
-                <motion.p
-                  className="hero-lead mb-4"
-                  style={{
-                    maxWidth: "600px",
-                    fontSize: "clamp(1rem, 2vw, 1.25rem)",
-                    lineHeight: "1.7",
-                  }}
-                  variants={itemVariants}
-                >
-                  {slides[index].desc}
+                <motion.p className="hero-lead mb-4" variants={itemVariants}>
+                  {slide.desc}
                 </motion.p>
 
                 {/* BUTTON */}
                 <motion.a
                   href="/contact"
-                  className="btn btn-primary px-5 py-3 rounded-pill fw-semibold"
-                  style={{
-                    backgroundColor: "#0d6efd",
-                    border: "none",
-                    fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)",
-                  }}
+                  className="btn btn-primary hero-btn px-5 py-3 rounded-pill fw-semibold"
                   variants={itemVariants}
                 >
                   Contact Now
@@ -161,23 +128,13 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* SLIDER DOTS */}
-      <div
-        className="d-flex justify-content-center gap-3 position-absolute bottom-0 pb-4 w-100"
-        style={{ zIndex: 3 }}
-      >
+      {/* DOTS */}
+      <div className="hero-dots position-absolute bottom-0 pb-4 w-100 d-flex justify-content-center gap-3">
         {slides.map((_, i) => (
           <div
             key={i}
             onClick={() => setIndex(i)}
-            style={{
-              width: index === i ? "18px" : "10px",
-              height: "10px",
-              borderRadius: "20px",
-              background: index === i ? "#fff" : "rgba(255,255,255,0.5)",
-              cursor: "pointer",
-              transition: "0.3s",
-            }}
+            className={`hero-dot ${index === i ? "active" : ""}`}
           />
         ))}
       </div>
@@ -186,83 +143,82 @@ export default function Hero() {
       <style>{`
         .hero-section {
           min-height: 100vh;
-          padding-top: 3rem;
-          padding-bottom: 3rem;
+          padding: 3rem 0;
         }
-        @media (max-width: 575.98px) {
-          .hero-section { 
-            min-height: 65vh;
-            padding: 1.8rem 0;
+
+        .hero-bg {
+          z-index: 1;
+          background-size: cover;
+          background-position: center;
+          transition: background-image 0s;
+        }
+
+        .hero-overlay {
+          background: rgba(0, 0, 0, 0.55);
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        .hero-content {
+          z-index: 2;
+        }
+
+        .hero-tag {
+          font-size: clamp(0.75rem, 1vw, 1rem);
+          letter-spacing: 2px;
+        }
+
+        .hero-title {
+          font-size: clamp(1.8rem, 4vw, 3.8rem);
+          line-height: 1.15;
+        }
+
+        .hero-lead {
+          max-width: 600px;
+          font-size: clamp(1rem, 2vw, 1.25rem);
+          line-height: 1.7;
+        }
+
+        .hero-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 20px;
+          background: rgba(255,255,255,0.5);
+          transition: .3s;
+          cursor: pointer;
+        }
+        
+        .hero-dot.active {
+          width: 18px;
+          background: #fff;
+        }
+
+        /* MOBILE */
+        @media (max-width: 576px) {
+          .hero-section {
+            min-height: 75vh;
+            padding: 1.5rem 0 2rem 0;
+          }
+          .hero-content {
+            padding-left: 1.2rem !important;
+            padding-right: 1.2rem !important;
+            text-align: left;
           }
           .hero-title {
-            line-height: 1.2 !important;
-            margin-bottom: 1rem !important;
+            font-size: 1.6rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: .8rem !important;
           }
-          .hero-lead { margin-bottom: 1.25rem; }
+          .hero-lead {
+            font-size: 1rem !important;
+            max-width: 95% !important;
+            line-height: 1.55 !important;
+          }
+          .hero-btn {
+            padding: .7rem 1.7rem !important;
+            font-size: .9rem !important;
+          }
         }
-          .hero-section {
-  min-height: 100vh;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-/* ---------- MOBILE ONLY (≤ 576px) ---------- */
-@media (max-width: 576px) {
-
-  /* Reduce hero height for mobile */
-  .hero-section {
-    min-height: 75vh;
-    padding: 1.5rem 0 2rem 0;
-    overflow-x: hidden !important;
-  }
-
-  /* Background scaling fix */
-  .hero-section > div {
-    background-size: cover !important;
-    background-position: center !important;
-  }
-
-  /* Container spacing fix */
-  .hero-content {
-    padding-left: 1.2rem !important;
-    padding-right: 1.2rem !important;
-    text-align: left;
-  }
-
-  /* Smaller title for mobile */
-  .hero-title {
-    font-size: 1.6rem !important;
-    line-height: 1.25 !important;
-    margin-bottom: 0.8rem !important;
-  }
-
-  /* Description text responsive */
-  .hero-lead {
-    font-size: 1rem !important;
-    line-height: 1.55 !important;
-    margin-bottom: 1.1rem !important;
-    max-width: 95% !important;
-  }
-
-  /* Tag */
-  .hero-section p.text-uppercase {
-    font-size: 0.75rem !important;
-    margin-bottom: 0.6rem !important;
-  }
-
-  /* Button mobile styling */
-  .hero-section .btn {
-    padding: 0.7rem 1.7rem !important;
-    font-size: 0.9rem !important;
-    border-radius: 50px !important;
-  }
-
-  /* Slider Dots */
-  .hero-section .bottom-0 {
-    bottom: 10px !important;
-  }
-}
-
       `}</style>
     </section>
   );

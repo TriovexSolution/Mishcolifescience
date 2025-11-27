@@ -7,24 +7,38 @@ export default function Testimonials() {
   const testimonialsData = [
     {
       quote:
-        "Mishco's adherence to WHO-GMP and commitment to ethical practice builds immense trust. Their quality assurance protocols ensure patient safety, making them a reliable partner for my practice.",
-      name: "Dr. Aarti Sharma",
-      title: "Consulting Physician, Mumbai, India",
-      avatar: "https://i.pravatar.cc/150?img=47", // Placeholder for avatar
+        "Mishco Lifescience has consistently delivered products that meet the highest standards of quality and reliability. Their robust supply chain and responsive team make working with them exceptionally smooth and dependable.",
+      name: "Dr. Kavita Sharma",
+      title: "General Physician, Maharashtra, India",
+      avatar: "https://i.pravatar.cc/150?img=47", // Professional female doctor
     },
     {
       quote:
-        "The focus on delivering affordable, high-quality branded generics is what sets Mishco apart. Their dedicated team and consistent supply chain are vital for our domestic distribution network.",
-      name: "Rajesh Patel",
-      title: "Pharma Distributor, Gujarat, India",
-      avatar: "https://i.pravatar.cc/150?img=61", // Placeholder for avatar
+        "What sets Mishco apart is their commitment to ethical business practices and timely delivery. Their branded generics have earned strong trust among doctors and patients in our region, and their service support is excellent.",
+      name: "Amit Desai",
+      title: "Pharma Distributor, Ahmedabad, India",
+      avatar: "https://i.pravatar.cc/150?img=61", // Professional male
     },
     {
       quote:
-        "With over 45 years of expertise, Mishco has built a legacy of excellence. We rely on their commitment to timely execution and compliance for our global and domestic sourcing needs.",
-      name: "Sanjay Menon",
-      title: "Sourcing Head, Large Indian Pharma Chain",
-      avatar: "https://i.pravatar.cc/150?img=5", // Placeholder for avatar
+        "We value Mishco’s transparency, consistent product availability, and high manufacturing standards. Their formulations have shown great acceptance in the market, and their team is always proactive in addressing our needs.",
+      name: "Sunil Verma",
+      title: "Medical Representative, Rajasthan, India",
+      avatar: "https://i.pravatar.cc/150?img=8", // Confident professional
+    },
+    {
+      quote:
+        "Mishco Lifescience has been a reliable partner for years. Their focus on quality, combined with competitive pricing, allows us to support our customers with confidence. Their professionalism is truly commendable.",
+      name: "Pooja Mehta",
+      title: "Pharma Wholesaler, Surat, India",
+      avatar: "https://i.pravatar.cc/150?img=32", // Professional female
+    },
+    {
+      quote:
+        "From product quality to documentation support, every interaction with Mishco has been seamless. Their brand portfolio is strong, and their dedication to timely supply makes them an invaluable part of our distribution network.",
+      name: "Dr. Rohan Bhatt",
+      title: "Consultant Physician, Gujarat, India",
+      avatar: "https://i.pravatar.cc/150?img=12", // Male doctor look
     },
   ];
 
@@ -104,8 +118,7 @@ export default function Testimonials() {
                 color: "#272b34",
               }}
             >
-              Building Trust with <br className="d-none d-lg-block" />
-              Indian Healthcare Professionals
+              Strengthening Trust with India’s Healthcare Community
             </h3>
 
             <p
@@ -117,9 +130,11 @@ export default function Testimonials() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              Our commitment to quality and service is reflected in the strong,
-              ethical relationships we build with doctors and distributors
-              across India.
+              Our dedication to quality, transparency, and service excellence is
+              reflected in the long-standing relationships we nurture with
+              doctors, pharmacists, and distributors across India. At Mishco
+              Lifescience LLP, we believe that meaningful partnerships are built
+              on integrity and we work every day to uphold that trust
             </p>
           </motion.div>
 

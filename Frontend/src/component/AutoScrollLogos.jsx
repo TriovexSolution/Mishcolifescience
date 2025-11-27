@@ -1,21 +1,21 @@
 import React from "react";
-import logo1 from "../assets/image/logo1.png";
-import logo2 from "../assets/image/logo2.png";
-import logo3 from "../assets/image/logo3.png";
-import logo4 from "../assets/image/logo4.png";
-import logo5 from "../assets/image/logo5.png";
+import logo1 from "../assets/logo/logoscroll2.png";
+import logo2 from "../assets/logo/logoscroll3.png";
+import logo3 from "../assets/logo/logoscroll4.png";
+// import logo4 from "../assets/image/logo4.png";
+// import logo5 from "../assets/image/logo5.png";
 
 export default function AutoScrollLogos() {
-  const logos = [logo1, logo2, logo3, logo4, logo5];
+  const logos = [logo1, logo2, logo3,logo1, logo2, logo3];
 
   return (
-    <section className="py-5 bg-white overflow-hidden mt-4">
-      <div className="container-fluid px-5 overflow-hidden">
+    <section className="p-5 bg-white overflow-hidden ">
+      <div className="container-fluid p-5 overflow-hidden ">
         
-        <div className="row align-items-center overflow-hidden">
+        <div className="row align-items-center overflow-hidden py-5">
           
           {/* LEFT SIDE */}
-          <div className="col-12 col-md-2 mb-3 mb-md-0">
+          <div className="col-12 col-md-2 mb-3 mt-5 mb-md-0">
             <p className="text-muted mb-1" style={{ fontSize: "0.9rem" }}>
               We are
             </p>
@@ -23,7 +23,7 @@ export default function AutoScrollLogos() {
           </div>
 
           {/* RIGHT SIDE - AUTO SCROLL LOGOS */}
-          <div className="col-12 col-md-10 overflow-hidden">
+          <div className="col-12 col-md-10 overflow-hidden mt-5">
             <div className="logo-slider overflow-hidden">
               <div className="logo-track">
                 {logos.concat(logos).map((logo, index) => (
@@ -61,15 +61,15 @@ export default function AutoScrollLogos() {
         }
 
         .logo-item {
-          padding: 0 40px;
+          padding: 0 40px ;
           display: flex;
           align-items: center;
         }
 
         .logo-item img {
-          height: 30px;
+          height: 90px;
           object-fit: contain;
-          filter: grayscale(100%);
+          filter: grayscale(0%);
           opacity: 0.8;
           transition: all 0.3s ease;
         }

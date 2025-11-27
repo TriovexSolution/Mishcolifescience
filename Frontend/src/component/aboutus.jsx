@@ -1,9 +1,9 @@
 import React from "react";
-import heroImg from "../assets/image/Hero1.jpg";
+import heroImg from "../assets/image/mishcobuilding.jpg";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure bootstrap CSS is imported if using utility classes
-
-const  AboutPage = () => {
+import CountUpOnView from "./CountUpOnView";
+const AboutPage = () => {
   const colors = {
     textDark: "#212529",
     textGrey: "#6c757d",
@@ -71,7 +71,7 @@ const  AboutPage = () => {
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif" }}>
+    <div style={{ fontFamily: "Arial, sans-serif" }} className="">
       {/* RESPONSIVE FIXES (Keep existing styles for layout) */}
       <style>
         {`
@@ -143,7 +143,7 @@ const  AboutPage = () => {
       </style>
       {/* ------------ HEADER SECTION (Updated) ------------- */}
       <div className="container py-5 px-3 px-lg-5">
-        <div className="row justify-content-center align-items-center">
+        <div className="row justify-content-center align-items-center ">
           {/* LEFT HEADING */}
           <motion.div
             className="col-lg-5 bg-white px-md-0 about-left-box"
@@ -164,19 +164,26 @@ const  AboutPage = () => {
               style={styles.heading}
               className="text-center justify-content-center"
             >
-              45+ Years of Global Pharma Excellence
+              45+ Years of Trusted Healthcare Excellence
             </h2>
           </motion.div>
           {/* RIGHT TEXT */}
           <motion.div
-            className="col-lg-4 px-md-0 about-right-box"
+            className="col-lg-4 px-md-0 about-right-box  "
             variants={rightVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            style={{ width: "40%" }}
           >
-            <p className="text-muted" style={{ lineHeight: "26px" }}>
-              Mishco Lifescience LLP is an Ahmedabad, India-based, WHO-GMP compliant pharmaceutical company specializing in affordable branded generic formulations and nutraceuticals for global export and marketing.
+            <p
+              className="text-muted text-start "
+              style={{ lineHeight: "26px", paddingBottom: "10px" }}
+            >
+              Mishco Lifescience LLP - Ahmedabad-based trusted pharmaceutical
+              company with 45+ years of excellence in developing, manufacturing,
+              and exporting high-quality branded generics & nutraceuticals
+              worldwide.
             </p>
           </motion.div>
         </div>
@@ -195,43 +202,28 @@ const  AboutPage = () => {
           className="stats-box mx-auto mx-lg-0 text-white p-4 rounded shadow"
           style={{ backgroundColor: colors.bluePrimary }}
         >
-          <div className="row text-center">
+          <div className="row text-center overflow-hidden">
+            {/* 1. Years of Expertise */}
             <div className="col-4 border-end border-light border-opacity-25">
-              <motion.div
-                style={styles.statNumber}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-              >
-                45+
+              <motion.div style={styles.statNumber}>
+                <CountUpOnView end={45} />+
               </motion.div>
-
               <div style={styles.statLabel}>Years of Industry Expertise</div>
             </div>
 
+            {/* 2. International Markets */}
             <div className="col-4 border-end border-light border-opacity-25">
-              <motion.div
-                style={styles.statNumber}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.2 }}
-              >
-                10+
+              <motion.div style={styles.statNumber}>
+                <CountUpOnView end={10} />+
               </motion.div>
-
               <div style={styles.statLabel}>International Markets Covered</div>
             </div>
 
+            {/* 3. Formulations */}
             <div className="col-4">
-              <motion.div
-                style={styles.statNumber}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4 }}
-              >
-                150+
+              <motion.div style={styles.statNumber}>
+                <CountUpOnView end={150} />+
               </motion.div>
-
               <div style={styles.statLabel}>Branded Generic Formulations</div>
             </div>
           </div>
@@ -267,11 +259,7 @@ const  AboutPage = () => {
                 className="text-muted small"
                 style={{ fontFamily: "Inter ,sans-serif" }}
               >
-                Our founding principle is to deliver high-quality, <strong>reliable,
-                and affordable</strong> branded generic formulations. We operate with a
-                strong sense of responsibility toward patients and healthcare
-                providers, ensuring every product we develop, market, and export
-                meets the most stringent standards of efficacy and compliance.
+                Our founding mission is to make world-class, affordable healthcare accessible to all by delivering high-quality, reliable, and cost-effective branded generic medicines and nutraceuticals worldwide. We operate with unwavering integrity and a deep sense of responsibility toward patients, doctors, distributors, and global partners — ensuring every formulation we develop, manufacture, and export adheres to WHO-GMP, ISO, and international regulatory standards for safety, efficacy, and consistency.
               </p>
             </motion.div>
             {/* Vision */}
@@ -295,11 +283,7 @@ const  AboutPage = () => {
                 className="text-muted small"
                 style={{ fontFamily: "Inter ,sans-serif" }}
               >
-                We aim to continuously expand our global reach into markets like
-                CIS, MENA, Kenya, and Thailand, focusing on <strong>innovative
-                formulations</strong> and robust supply chains. We strive to be the
-                preferred partner for clients seeking <strong>WHO-GMP compliant</strong>,
-                customized, and ethically sourced healthcare products.
+                Our vision is to be recognized globally as a trusted pharmaceutical leader distinguished by uncompromised quality, continuous innovation, and ethical excellence. We aspire to set new benchmarks in patient care by delivering reliable, WHO-GMP certified medicines and nutraceuticals that healthcare professionals and patients worldwide can depend on — today and for generations to come.
               </p>
             </motion.div>
           </div>

@@ -21,9 +21,9 @@ const WhyWeStartedSection = () => {
     },
   };
   return (
-    <section className="py-5 bg-white position-relative">
+    <section className="py-5 bg-white position-relative ">
       <div className="container-fluid px-5 position-relative">
-        <div className="row align-items-center g-5">
+        <div className="row align-items-center g-5 pb-5">
           {/* IMAGE COLUMN */}
           <div className="col-6 col-lg-8">
             <motion.div
@@ -47,7 +47,7 @@ const WhyWeStartedSection = () => {
           {/* TEXT CARD */}
           <div className="col-6 col-lg-4 bg-white p-4 p-lg-5  why-text-card">
             <motion.div
-              className="col-12 col-lg-8"
+              className="col-12 col-lg-8 "
               variants={rightVariant}
               initial="hidden"
               whileInView="visible"
@@ -74,7 +74,8 @@ const WhyWeStartedSection = () => {
                   lineHeight: "64px",
                 }}
               >
-              Quality Health, Accessible Worldwide
+                Delivering Quality Healthcare, Accessible to Communities
+                Worldwide
               </h1>
 
               <p
@@ -86,23 +87,30 @@ const WhyWeStartedSection = () => {
                   lineHeight: "28px",
                 }}
               >
-                Founded with a mission to make healthcare affordable, reliable,
-                and accessible. Mishco Lifescience LLP is a dynamic
-                pharmaceutical company engaged in the development, marketing,
-                and export of **branded generic formulations. We operate with a
-                strong sense of responsibility toward patients and healthcare
-                providers, ensuring every product meets the highest standards of
-                quality, safety, and therapeutic value.
+                At Mishco Lifescience LLP, we are committed to making
+                high-quality healthcare affordable, reliable, and accessible
+                worldwide. As a progressive pharmaceutical company, we develop,
+                market, and export trusted branded generics that meet strict
+                international standards. With a strong sense of responsibility
+                toward patients and healthcare professionals, we ensure every
+                product reflects the highest levels of quality, safety, and
+                therapeutic value. Driven by science, ethics, and innovation, we
+                continue to expand our reach and improve lives across global
+                markets.
               </p>
 
-              
-              <NavLink to={"contact"} className="btn btn-primary px-4 py-2 fw-semibold bg-[#246CB3] px-4 py-3 rounded-0"
+              <NavLink
+                to={"contact"}
+                className="btn btn-primary px-4 py-3 fw-semibold bg-[#246CB3]  rounded-0"
                 style={{
                   fontFamily: "Sen ,sans-serif",
                   fontWeight: "700",
                   fontSize: "18px",
                   lineHeight: "24px",
-                }}>Conatct Us</NavLink>
+                }}
+              >
+                Conatct Us
+              </NavLink>
             </motion.div>
           </div>
         </div>

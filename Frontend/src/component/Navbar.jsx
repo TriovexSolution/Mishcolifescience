@@ -31,7 +31,7 @@ export default function Navbar() {
         <div className="container-fluid px-4 mx-5">
           {/* Logo */}
           <a className="navbar-brand" href="/" style={{ outline: "none", boxShadow: "none" }}>
-            <img src={mishcoLogo} alt="Mishco Life Science LLP" height="45" />
+            <img src={mishcoLogo} alt="Mishco Life Science LLP" height="50" />
           </a>
 
           {/* Mobile Toggle */}

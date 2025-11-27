@@ -6,10 +6,10 @@ function BlogPage() {
     console.log("blog page");
     
   return (
-    <>
+    <div className='overflow-hidden'>
       <FeaturedPost />
       <Allpostblog />
-    </>
+    </div>
   )
 }
 

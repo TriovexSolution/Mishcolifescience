@@ -81,13 +81,13 @@ export const getBlogs = async (req, res) => {
     const featured = blogs.length > 0 ? blogs[0] : null; // The absolute latest post
 
     // All other posts, starting from the second element (index 1)
-    const posts = blogs.slice(1);
+    // const posts = blogs.slice(1);
     // You can optionally filter out featured posts too, but slicing already removes the newest one
 
     res.status(200).json({
       success: true,
       featured, // The absolute latest one
-      posts, // All posts EXCEPT the absolute latest one
+      posts: blogs, // All posts EXCEPT the absolute latest one
       total: blogs.length,
     });
   } catch (error) {

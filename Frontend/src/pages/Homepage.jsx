@@ -8,15 +8,19 @@ import TestimonialsSection from '../component/TestimonialsSection'
 import ContactSection from '../component/ContactSection'
 import Footer from '../component/footer'
 import QualityRDSection from '../component/QualityRDSection'
+import LogoCloudCarousel from '../component/logocarousel'
+import RatingMarquee from '../component/logocarousel'
 
 function Homepage() {
   return (
-    <div className="w-100 p-0 m-0">
+    <div className="w-100 p-0 m-0 overflow-hidden">
       {/* <Navbar /> */}
       <HeroSection />
       <AboutMissionPage/>
       <WhyWeStartedSection />
-      <AutoScrollLogos />
+      {/* <LogoCloudCarousel/> */}
+      {/* <RatingMarquee/> */}
+      <AutoScrollLogos/>
       <QualityRDSection />
       <TestimonialsSection />
       <ContactSection />

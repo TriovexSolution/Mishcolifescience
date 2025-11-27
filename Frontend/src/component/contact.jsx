@@ -180,21 +180,37 @@ const Contact = () => {
                 </p>
               </div>
               <div className="col-md-6 p-4 ps-md-5">
+                {/* Section Label */}
                 <p
                   className="text-uppercase small fw-bold mb-3"
-                  style={{ opacity: 0.7, fontFamily: "Inter, sans-serif" }}
+                  style={{
+                    opacity: 0.7,
+                    fontFamily: "Inter, sans-serif",
+                    letterSpacing: "1px",
+                  }}
                 >
                   Phone & Email
                 </p>
 
                 {/* Phone */}
-                <p style={styles.infoDetail}>+91-8980001090</p>
+                <p
+                  className="mb-2"
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "1.1rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  +91-8980001090
+                </p>
 
                 {/* General Email */}
                 <p
-                  className="small"
+                  className="small mb-2"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
+                  <strong>General Enquiry:</strong>
+                  <br />
                   <a
                     href="mailto:info@mishcolife.com"
                     className="text-decoration-none text-white"
@@ -205,10 +221,11 @@ const Contact = () => {
 
                 {/* International Enquiry */}
                 <p
-                  className="small"
+                  className="small mb-2"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  International Enquiry:&nbsp;
+                  <strong>International Enquiry:</strong>
+                  <br />
                   <a
                     href="mailto:nikhil@mishcolife.com"
                     className="text-decoration-none text-white"
@@ -219,10 +236,11 @@ const Contact = () => {
 
                 {/* Procurement */}
                 <p
-                  className="small"
+                  className="small mb-0"
                   style={{ fontFamily: "Inter, sans-serif" }}
                 >
-                  Procurement:&nbsp;
+                  <strong>Procurement:</strong>
+                  <br />
                   <a
                     href="mailto:purchase@mishcolife.com"
                     className="text-decoration-none text-white"
