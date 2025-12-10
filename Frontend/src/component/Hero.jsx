@@ -25,9 +25,9 @@ const slides = [
   {
     id: 3,
     img: hero3,
-    tag: "质量 & Access",
+    tag: "Quality & Access",
     title: "Quality, Innovation, and Accessibility Focused",
-    desc: "Dedicated to quality, innovation, and accessibility, backed by WHO-GMP compliant facilities。",
+    desc: "Dedicated to quality, innovation, and accessibility, backed by WHO-GMP compliant facilities.",
   },
 ];
 

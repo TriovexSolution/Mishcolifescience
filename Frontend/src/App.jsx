@@ -1,4 +1,3 @@
-// src/App.js
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -21,18 +20,62 @@ import SingleblogPage from "./pages/SingleblogPage";
 import PrivacypolicyPage from "./pages/PrivacypolicyPage";
 import SingleProduct from "./component/Newsingleproduct";
 
-// Scroll to Top Component
+/**
+ * Robust ScrollToTop (in-App.js)
+ * - useLayoutEffect to run before paint
+ * - runs multiple scroll techniques (window.scrollTo, document.body/documentElement)
+ * - requestAnimationFrame + setTimeout fallback for mobile/Safari quirks
+ */
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
+
+  React.useLayoutEffect(() => {
+    // central function that attempts multiple scroll techniques
+    const doScrollTop = () => {
+      try {
+        // most reliable immediate jump
+        window.scrollTo(0, 0);
+      } catch (e) {}
+
+      try {
+        // override possible saved scroll positions
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      } catch (e) {}
+
+      try {
+        // some browsers support this API
+        document.documentElement.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      } catch (e) {}
+    };
+
+    // run immediately (before paint)
+    doScrollTop();
+
+    // run again inside rAF twice to ensure it's applied after render/layout
+    const rafId1 = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        doScrollTop();
+      });
+    });
+
+    // final fallback: run after short delay (mobile render sometimes slower)
+    const timeoutId = setTimeout(doScrollTop, 80);
+
+    // cleanup
+    return () => {
+      cancelAnimationFrame(rafId1);
+      clearTimeout(timeoutId);
+    };
   }, [pathname]);
+
   return null;
 };
 
 export default function App() {
   return (
     <Router>
+      {/* Robust scroll-to-top inside App */}
       <ScrollToTop />
 
       <ConditionalLayout />
@@ -52,7 +95,7 @@ const ConditionalLayout = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/home" element={<Homepage />} />
-        
+
         <Route path="/about" element={<AboutPage />} />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/contact" element={<ContactUs />} />

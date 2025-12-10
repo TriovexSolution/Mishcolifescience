@@ -169,7 +169,7 @@ export default function Footer() {
                   <input
                     type="email"
                     placeholder="Enter Your Email"
-                    className="placeholder-white"
+                    className="placeholder-white w-100"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -186,7 +186,7 @@ export default function Footer() {
 
                   <button
                     type="submit"
-                    className="btn w-100 w-sm-auto rounded-0" // ⭐ IMPROVEMENT: w-100 on mobile, auto width on small-to-up ⭐
+                    className="btn  w-sm-auto  rounded-0" // ⭐ IMPROVEMENT: w-100 on mobile, auto width on small-to-up ⭐
                     disabled={loading}
                     style={{
                       backgroundColor: "white",

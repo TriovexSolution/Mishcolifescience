@@ -11,7 +11,6 @@ const WhyWeStartedSection = () => {
       transition: { duration: 0.8, ease: "easeOut" },
     },
   };
-
   const rightVariant = {
     hidden: { x: 100, opacity: 0 },
     visible: {
@@ -43,11 +42,10 @@ const WhyWeStartedSection = () => {
               </div>
             </motion.div>
           </div>
-
           {/* TEXT CARD */}
-          <div className="col-6 col-lg-4 bg-white p-4 p-lg-5  why-text-card">
+          <div className="col-6 col-lg-4 bg-white p-4 p-lg-5 why-text-card">
             <motion.div
-              className="col-12 col-lg-8 "
+              className="col-12 col-lg-8 inner-text-content" // Added a helper class here
               variants={rightVariant}
               initial="hidden"
               whileInView="visible"
@@ -64,7 +62,6 @@ const WhyWeStartedSection = () => {
               >
                 OUR CORE MISSION
               </h3>
-
               <h1
                 className="fw-bold text-dark lh-sm mb-4 display-6"
                 style={{
@@ -77,7 +74,6 @@ const WhyWeStartedSection = () => {
                 Delivering Quality Healthcare, Accessible to Communities
                 Worldwide
               </h1>
-
               <p
                 className="text-muted lead mb-4"
                 style={{
@@ -98,10 +94,9 @@ const WhyWeStartedSection = () => {
                 continue to expand our reach and improve lives across global
                 markets.
               </p>
-
               <NavLink
                 to={"contact"}
-                className="btn btn-primary px-4 py-3 fw-semibold bg-[#246CB3]  rounded-0"
+                className="btn btn-primary px-4 py-3 fw-semibold bg-[#246CB3] rounded-0"
                 style={{
                   fontFamily: "Sen ,sans-serif",
                   fontWeight: "700",
@@ -115,23 +110,22 @@ const WhyWeStartedSection = () => {
           </div>
         </div>
       </div>
-
       {/* ---------- RESPONSIVE OVERLAY POSITIONING ---------- */}
       <style>{`
-        /* Desktop (Large Screens): Increase Size + Bottom Right */
-        @media (min-width: 992px) {
+        /* Desktop (Large Screens): Only apply complex layout above 1250px */
+        @media (min-width: 1250px) {
           .why-text-card {
             position: absolute;
             bottom: 0%;
             left: 74%;
             transform: translateX(-50%);
-            width: 68%;  
-            height: 71%;  /* Increased size */
+            width: 68%;
+            height: 71%; 
           }
         }
-
-        /* Tablet View: Text goes below the image */
-        @media (min-width: 768px) and (max-width: 991.98px) {
+        
+        /* Tablet/Intermediate View: Switch to stacked layout below 1250px (768px to 1249.98px) */
+        @media (min-width: 768px) and (max-width: 1249.98px) { 
           .why-text-card {
             position: relative !important;
             width: 100% !important;
@@ -140,10 +134,17 @@ const WhyWeStartedSection = () => {
             transform: none !important;
             margin-top: 1rem;
           }
+          /* FIX: Ensure the inner text content takes full width when stacked */
+          .why-text-card .col-12.col-lg-8 {
+            width: 100% !important; 
+          }
         }
 
-        /* Mobile View */
+        /* Mobile View (Below 768px) */
         @media (max-width: 767.98px) {
+          .col-6 {
+            width: 100%; 
+          }
           .why-text-card {
             position: relative !important;
             width: 100%;
@@ -152,10 +153,13 @@ const WhyWeStartedSection = () => {
             transform: none !important;
             margin-top: 1.5rem;
           }
+          /* FIX: Ensure the inner text content takes full width when stacked */
+          .why-text-card .col-12.col-lg-8 {
+            width: 100% !important; 
+          }
         }
       `}</style>
     </section>
   );
 };
-
 export default WhyWeStartedSection;

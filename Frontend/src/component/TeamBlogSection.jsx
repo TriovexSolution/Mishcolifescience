@@ -183,7 +183,7 @@ const TeamBlogSection = () => {
             className="fw-semibold mt-3"
             style={{ fontFamily: "Sen, sans-serif" }}
           >
-            Quality is our identity — monitored at every stage.
+            Quality is our identity monitored at every stage.
           </p>
           <p
             className="text-muted mt-3"
@@ -194,8 +194,8 @@ const TeamBlogSection = () => {
             validated processes and advanced analytical systems.
             <br />
             <br />
-            We ensure every product meets the highest standards of
-            <strong>safety, efficacy, stability, and therapeutic value</strong>.
+            We ensure every product meets the highest standards of 
+            <strong style={{marginLeft:"4px"}}>safety, efficacy, stability, and therapeutic value</strong>.
           </p>
         </motion.div>
       </div>
@@ -243,7 +243,7 @@ const TeamBlogSection = () => {
             end-to-end regulatory support, seamless private labeling options,
             and reliable global logistics, we empower distributors, hospitals,
             and healthcare partners to deliver affordable, world-class medicines
-            to patients who need them most — with our international presence
+            to patients who need them most with our international presence
             continuously expanding.
           </p>
         </motion.div>
@@ -284,7 +284,7 @@ const TeamBlogSection = () => {
             formulation, integrity in every decision, innovation driven by
             science, trust built through transparent partnerships, consistency
             that ensures excellence in every product, and timely execution that
-            delivers on every commitment — because we believe ethical
+            delivers on every commitment  because we believe ethical
             pharmaceutical practices and patient-first principles are the
             foundation of sustainable global healthcare.
           </p>

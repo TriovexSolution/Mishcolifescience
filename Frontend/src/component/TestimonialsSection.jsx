@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Testimonials() {
-  // Testimonial Data focused on the Indian Domestic Market and Key Values
   const testimonialsData = [
     {
       quote:
@@ -84,15 +83,15 @@ export default function Testimonials() {
   };
 
   return (
-    <div className="container-fluid py-5 px-5 d-flex justify-content-center align-items-center">
+    <div className="container-fluid py-5 px-sm-3 px-md-5 d-flex justify-content-center align-items-center">
       <div
-        className="container-fluid p-4 p-md-5"
+        className="container-fluid p-3 p-md-5" // Adjusted padding here
         style={{ backgroundColor: "#e7f1f9" }}
       >
         <div className="row align-items-center">
           {/* LEFT SECTION: Introduction */}
           <motion.div
-            className="col-12 col-lg-5 border-lg-end p-3 p-md-4 p-lg-5 text-center text-lg-start border-lg-end"
+            className="col-12 col-lg-5 border-lg-end p-3 p-md-4 p-lg-5 text-center text-lg-start border-lg-end" // Ensure text is centered on mobile
             style={{ fontFamily: "Sen, sans-serif" }}
             variants={leftVariant}
             initial="hidden"
@@ -116,6 +115,7 @@ export default function Testimonials() {
                 fontSize: "28px",
                 lineHeight: "36px",
                 color: "#272b34",
+                fontFamily: "Sen, sans-serif",
               }}
             >
               Strengthening Trust with India’s Healthcare Community
@@ -140,25 +140,21 @@ export default function Testimonials() {
 
           {/* RIGHT SECTION: Testimonial Content */}
           <motion.div
-            className="col-12 col-lg-7 p-3 p-md-4 p-lg-5"
+            className="col-12 col-lg-7 p-3 p-md-4 p-lg-5" // Adjusted padding here
             style={{ fontFamily: "Sen, sans-serif" }}
             variants={rightVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            {/* ===== TEXT BLOCK WITH RESPONSIVE FIXED HEIGHT ===== */}
-            {/* Mobile height */}
-            <div
-              className="d-block d-sm-none"
-              style={{ height: "120px", overflow: "hidden" }}
-            >
+            {/* Quote Text - Using a min-height for consistency, but allowing growth if needed */}
+            <div className="testimonial-quote-box mb-4">
               <motion.p
                 key={currentIndex}
                 variants={testimonialContentVariant}
                 initial="initial"
                 animate="animate"
-                className="mb-4 mb-md-5"
+                className="mb-0" // Removed extra bottom margin to manage with parent div
                 style={{
                   fontSize: "20px",
                   lineHeight: "30px",
@@ -170,59 +166,14 @@ export default function Testimonials() {
               </motion.p>
             </div>
 
-            {/* Tablet height */}
-            <div
-              className="d-none d-sm-block d-lg-none"
-              style={{ height: "150px", overflow: "hidden" }}
-            >
-              <motion.p
-                key={currentIndex}
-                variants={testimonialContentVariant}
-                initial="initial"
-                animate="animate"
-                className="mb-4 mb-md-5"
-                style={{
-                  fontSize: "20px",
-                  lineHeight: "30px",
-                  color: "#272b34",
-                  fontWeight: "500",
-                }}
-              >
-                {currentTestimonial.quote}
-              </motion.p>
-            </div>
-
-            {/* Desktop height */}
-            <div
-              className="d-none d-lg-block"
-              style={{ height: "180px", overflow: "hidden" }}
-            >
-              <motion.p
-                key={currentIndex}
-                variants={testimonialContentVariant}
-                initial="initial"
-                animate="animate"
-                className="mb-4 mb-md-5"
-                style={{
-                  fontSize: "20px",
-                  lineHeight: "30px",
-                  color: "#272b34",
-                  fontWeight: "500",
-                }}
-              >
-                {currentTestimonial.quote}
-              </motion.p>
-            </div>
-            {/* ========================================================== */}
-
-            {/* PROFILE + ARROWS */}
-            <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-4">
+            {/* PROFILE + ARROWS - Mobile-first stacking, then row on tablet/desktop */}
+            <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-4 mt-4"> {/* Added mt-4 for spacing */}
               {/* PROFILE */}
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center flex-column flex-sm-row text-center text-sm-start"> {/* Center text on mobile */}
                 <img
                   src={currentTestimonial.avatar}
                   alt={currentTestimonial.name}
-                  className="rounded-circle me-3"
+                  className="rounded-circle me-0 me-sm-3 mb-3 mb-sm-0" // Adjusted margin for mobile stack
                   width="60"
                   height="60"
                 />

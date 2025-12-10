@@ -128,6 +128,7 @@ const AboutPage = () => {
         background-color: ${colors.bluePrimary};
         padding: 1.5rem;
         margin-top: 20px;
+        margin: 20px;
         width: 100%;
         position: relative;
         z-index: 1;
@@ -142,7 +143,7 @@ const AboutPage = () => {
      `}
       </style>
       {/* ------------ HEADER SECTION (Updated) ------------- */}
-      <div className="container py-5 px-3 px-lg-5">
+      <div className="container  py-5 px-3 px-lg-5">
         <div className="row justify-content-center align-items-center ">
           {/* LEFT HEADING */}
           <motion.div
@@ -199,10 +200,10 @@ const AboutPage = () => {
         />
 
         <div
-          className="stats-box mx-auto mx-lg-0 text-white p-4 rounded shadow"
+          className="stats-box mx-auto mx-lg-0 text-white p-4  shadow"
           style={{ backgroundColor: colors.bluePrimary }}
         >
-          <div className="row text-center overflow-hidden">
+          <div className="row text-center overflow-hidden ">
             {/* 1. Years of Expertise */}
             <div className="col-4 border-end border-light border-opacity-25">
               <motion.div style={styles.statNumber}>
@@ -233,62 +234,81 @@ const AboutPage = () => {
       {/* ---------------------------------------------------------------------- */}
       {/* ---------- VISION & MISSION SECTION (Updated) ----------- */}
 
-      <div className="pb-5">
-        <div className="container mx-auto">
-          <div
-            className="row p-4 p-md-5"
-            style={{ backgroundColor: "#EAF5FF" }}
-          >
-            {/* Mission */}
-            <motion.div
-              className="col-md-6 mb-5 mb-md-0"
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true }}
-            >
-              <div style={styles.sectionLabel} className="p-0">
-                Our Mission
-              </div>
-
-              <h3 style={styles.subHeading}>
-                Making Quality Healthcare Accessible and Affordable Worldwide
-              </h3>
-
-              <p
-                className="text-muted small"
-                style={{ fontFamily: "Inter ,sans-serif" }}
-              >
-                Our founding mission is to make world-class, affordable healthcare accessible to all by delivering high-quality, reliable, and cost-effective branded generic medicines and nutraceuticals worldwide. We operate with unwavering integrity and a deep sense of responsibility toward patients, doctors, distributors, and global partners — ensuring every formulation we develop, manufacture, and export adheres to WHO-GMP, ISO, and international regulatory standards for safety, efficacy, and consistency.
-              </p>
-            </motion.div>
-            {/* Vision */}
-            <motion.div
-              className="col-md-6"
-              initial={{ x: 100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true }}
-            >
-              <div style={styles.sectionLabel} className="p-0">
-                Our Vision
-              </div>
-
-              <h3 style={styles.subHeading}>
-                The Most Trusted Global Partner for Value-Driven Pharma
-                Solutions
-              </h3>
-
-              <p
-                className="text-muted small"
-                style={{ fontFamily: "Inter ,sans-serif" }}
-              >
-                Our vision is to be recognized globally as a trusted pharmaceutical leader distinguished by uncompromised quality, continuous innovation, and ethical excellence. We aspire to set new benchmarks in patient care by delivering reliable, WHO-GMP certified medicines and nutraceuticals that healthcare professionals and patients worldwide can depend on — today and for generations to come.
-              </p>
-            </motion.div>
+    <div className="pb-5">
+    <div className="container mx-auto">
+      <div
+        // KEY CHANGE: text-center for small screens, text-md-start for medium/large screens
+        className="row p-4 p-md-5 text-center  mx-auto text-md-start"
+        style={{ backgroundColor: "#EAF5FF" ,
+          
+        }}
+      >
+        {/* Mission */}
+        <motion.div
+          className="col-md-6 mb-5 mb-md-0"
+          initial={{ x: -100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <div style={styles.sectionLabel} className="p-0">
+            Our Mission
           </div>
-        </div>
+
+          <h3 style={styles.subHeading}>
+            Making Quality Healthcare Accessible and Affordable Worldwide
+          </h3>
+
+          <p
+            // KEY CHANGE: Apply alignment to the paragraph itself for proper centering
+            className="text-muted small text-center text-md-start"
+            style={{ fontFamily: "Inter ,sans-serif" }}
+          >
+            Our founding mission is to make world-class, affordable
+            healthcare accessible to all by delivering high-quality,
+            reliable, and cost-effective branded generic medicines and
+            nutraceuticals worldwide. We operate with unwavering integrity
+            and a deep sense of responsibility toward patients, doctors,
+            distributors, and global partners ensuring every formulation we
+            develop, manufacture, and export adheres to WHO-GMP, ISO, and
+            international regulatory standards for safety, efficacy, and
+            consistency.
+          </p>
+        </motion.div>
+        {/* Vision */}
+        <motion.div
+          className="col-md-6"
+          initial={{ x: 100, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <div style={styles.sectionLabel} className="p-0">
+            Our Vision
+          </div>
+
+          <h3 style={styles.subHeading}>
+            The Most Trusted Global Partner for Value-Driven Pharma
+            Solutions
+          </h3>
+
+          <p
+            // KEY CHANGE: Apply alignment to the paragraph itself for proper centering
+            className="text-muted small text-center text-md-start"
+            style={{ fontFamily: "Inter ,sans-serif" }}
+          >
+            Our vision is to be recognized globally as a trusted
+            pharmaceutical leader distinguished by uncompromised quality,
+            continuous innovation, and ethical excellence. We aspire to set
+            new benchmarks in patient care by delivering reliable, WHO-GMP
+            certified medicines and nutraceuticals that healthcare
+            professionals and patients worldwide can depend on today and for
+            generations to come.
+          </p>
+        </motion.div>
       </div>
+    </div>
+  </div>
     </div>
   );
 };
