@@ -4,33 +4,35 @@ import Category from "../model/categoryModel.js";
 import fs from "fs";
 import path from "path";
 import mongoose from "mongoose";
-import Subscriber from '../model/subscribeModel.js'; // ⭐ Import Subscriber Model
-import sendEmail from '../utiles/sendEmail.js'; // ⭐ Import Email Utility
+import Subscriber from "../model/subscribeModel.js"; // ⭐ Import Subscriber Model
+import sendEmail from "../utiles/sendEmail.js";
+import { Api } from "../../Mishco-Admin/api.js";
+const api = Api; // ⭐ Import Email Utility
 // === parseObjectId Helper (Keep yours) ===
 const parseObjectId = (id) => {
-    if (!id) return null;
-    if (typeof id === "string") {
-        if (mongoose.Types.ObjectId.isValid(id)) return id;
-        try {
-            const parsed = JSON.parse(id);
-            if (
-                parsed &&
-                parsed.$oid &&
-                mongoose.Types.ObjectId.isValid(parsed.$oid)
-            ) {
-                return parsed.$oid;
-            }
-        } catch {}
-    }
-    if (
-        id &&
-        typeof id === "object" &&
-        id.$oid &&
-        mongoose.Types.ObjectId.isValid(id.$oid)
-    ) {
-        return id.$oid;
-    }
-    return null;
+  if (!id) return null;
+  if (typeof id === "string") {
+    if (mongoose.Types.ObjectId.isValid(id)) return id;
+    try {
+      const parsed = JSON.parse(id);
+      if (
+        parsed &&
+        parsed.$oid &&
+        mongoose.Types.ObjectId.isValid(parsed.$oid)
+      ) {
+        return parsed.$oid;
+      }
+    } catch {}
+  }
+  if (
+    id &&
+    typeof id === "object" &&
+    id.$oid &&
+    mongoose.Types.ObjectId.isValid(id.$oid)
+  ) {
+    return id.$oid;
+  }
+  return null;
 };
 // Helper function to delete physical file from disk
 const deleteFile = (imagePath) => {
@@ -46,89 +48,92 @@ const deleteFile = (imagePath) => {
 
 // === CREATE PRODUCT ===
 export const createProduct = async (req, res) => {
+  try {
+    const data = { ...req.body };
+
+    // --- Cleanup and Parsing Logic (omitted for brevity) ---
+    delete data._id;
+    delete data.createdAt;
+    delete data.__v;
+
+    if (data.composition && typeof data.composition === "string")
+      data.composition = JSON.parse(data.composition);
+    if (data.indications && typeof data.indications === "string")
+      data.indications = JSON.parse(data.indications);
+    if (data.contraindications && typeof data.contraindications === "string")
+      data.contraindications = JSON.parse(data.contraindications);
+    if (data.uses && typeof data.uses === "string")
+      data.uses = JSON.parse(data.uses);
+    if (data.mechanismOfAction && typeof data.mechanismOfAction === "string")
+      data.mechanismOfAction = JSON.parse(data.mechanismOfAction);
+
+    // --- Category Validation and Assignment ---
+    const categoryId = parseObjectId(data.category);
+    if (!categoryId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid category ID." });
+    }
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Category not found." });
+    }
+    data.category = categoryId;
+
+    // --- Image - MULTIPLE FILES LOGIC (omitted for brevity) ---
+    let uploadedFiles = [];
+    if (Array.isArray(req.files)) {
+      uploadedFiles = req.files;
+    } else if (
+      req.files &&
+      req.files.productImages &&
+      Array.isArray(req.files.productImages)
+    ) {
+      uploadedFiles = req.files.productImages;
+    }
+
+    const imagePaths = [];
+    if (uploadedFiles.length > 0) {
+      uploadedFiles.forEach((file) => {
+        // NOTE: Changed path from /uploads/products/ to /uploads/product/ to match your previous path,
+        // but ensure your static path setup in server.js matches your folder structure!
+        imagePaths.push(`/uploads/products/${file.filename}`);
+      });
+    }
+
+    data.productImage = imagePaths;
+
+    // === 1. Create Product ===
+    const product = await Product.create(data);
+
+    // === 2. ⭐ SUBSCRIBER NOTIFICATION LOGIC (WITH DEBUGGING) ⭐ ===
     try {
-        const data = { ...req.body };
+      const subscribers = await Subscriber.find({});
 
-        // --- Cleanup and Parsing Logic (omitted for brevity) ---
-        delete data._id;
-        delete data.createdAt;
-        delete data.__v; 
-        
-        if (data.composition && typeof data.composition === "string")
-            data.composition = JSON.parse(data.composition);
-        if (data.indications && typeof data.indications === "string")
-            data.indications = JSON.parse(data.indications); 
-        if (data.contraindications && typeof data.contraindications === "string")
-            data.contraindications = JSON.parse(data.contraindications); 
-        if (data.uses && typeof data.uses === "string")
-            data.uses = JSON.parse(data.uses); 
-        if (data.mechanismOfAction && typeof data.mechanismOfAction === "string")
-            data.mechanismOfAction = JSON.parse(data.mechanismOfAction);
-        
-        // --- Category Validation and Assignment ---
-        const categoryId = parseObjectId(data.category);
-        if (!categoryId) {
-            return res
-                .status(400)
-                .json({ success: false, message: "Invalid category ID." });
-        }
-        const category = await Category.findById(categoryId);
-        if (!category) {
-            return res
-                .status(400)
-                .json({ success: false, message: "Category not found." });
-        }
-        data.category = categoryId;
-        
-        // --- Image - MULTIPLE FILES LOGIC (omitted for brevity) ---
-        let uploadedFiles = [];
-        if (Array.isArray(req.files)) {
-            uploadedFiles = req.files;
-        } else if (
-            req.files &&
-            req.files.productImages &&
-            Array.isArray(req.files.productImages)
-        ) {
-            uploadedFiles = req.files.productImages;
-        }
+      if (subscribers.length > 0) {
+        const subscriberEmails = subscribers.map((sub) => sub.email).join(", ");
+        const newProductName =
+          product.productName || product.name || "New Product";
 
-        const imagePaths = [];
-        if (uploadedFiles.length > 0) {
-            uploadedFiles.forEach((file) => {
-                // NOTE: Changed path from /uploads/products/ to /uploads/product/ to match your previous path, 
-                // but ensure your static path setup in server.js matches your folder structure!
-                imagePaths.push(`/uploads/product/${file.filename}`); 
-            });
-        }
+        // ⭐ START DEBUGGING LOGS ⭐
+        const productUrl = `${api}/singleproduct/${product._id}`;
+        console.log("--- EMAIL DEBUGGING START ---");
+        console.log(
+          `CLIENT_URL Environment Variable: ${process.env.CLIENT_URL}`
+        );
+        console.log(`New Product ID: ${product._id}`);
+        console.log(`Generated Link (HREF): ${productUrl}`);
+        console.log(`BCC Recipients Count: ${subscribers.length}`);
+        console.log("--- EMAIL DEBUGGING END ---");
+        // ⭐ END DEBUGGING LOGS ⭐
 
-        data.productImage = imagePaths; 
-
-        // === 1. Create Product ===
-        const product = await Product.create(data); 
-        
-        // === 2. ⭐ SUBSCRIBER NOTIFICATION LOGIC (WITH DEBUGGING) ⭐ ===
-        try {
-            const subscribers = await Subscriber.find({});
-            
-            if (subscribers.length > 0) {
-                const subscriberEmails = subscribers.map(sub => sub.email).join(', '); 
-                const newProductName = product.productName || product.name || 'New Product';
-                
-                // ⭐ START DEBUGGING LOGS ⭐
-                const productUrl = `${process.env.CLIENT_URL}/singleproduct/${product._id}`;
-                console.log("--- EMAIL DEBUGGING START ---");
-                console.log(`CLIENT_URL Environment Variable: ${process.env.CLIENT_URL}`);
-                console.log(`New Product ID: ${product._id}`);
-                console.log(`Generated Link (HREF): ${productUrl}`);
-                console.log(`BCC Recipients Count: ${subscribers.length}`);
-                console.log("--- EMAIL DEBUGGING END ---");
-                // ⭐ END DEBUGGING LOGS ⭐
-
-                await sendEmail({
-                    to: process.env.FROM_EMAIL, 
-                    bcc: subscriberEmails, 
-                    subject: `🚀 New Product Launch: ${newProductName} from Mishco Lifescience`,
-                    html: `
+        await sendEmail({
+          to: process.env.FROM_EMAIL,
+          bcc: subscriberEmails,
+          subject: `🚀 New Product Launch: ${newProductName} from Mishco Lifescience`,
+          html: `
                         <div style="font-family: sans-serif; padding: 20px;">
                             <p>Hello valued subscriber,</p>
                             <p>We are excited to announce the launch of our new product:</p>
@@ -141,29 +146,34 @@ export const createProduct = async (req, res) => {
                             <p style="margin-top: 30px;">Best regards,<br>The Mishco Lifescience Team</p>
                         </div>
                     `,
-                });
-                console.log(`New product email sent to ${subscribers.length} subscribers.`);
-            }
-        } catch (emailError) {
-            console.error("Error sending new product email notification:", emailError);
-        }
-        // === 3. Populate and Respond ===
-        const populated = await Product.findById(product._id)
-            .populate("category", "name slug icon")
-            .lean();
-
-        res.status(201).json({
-            success: true,
-            message: "Product created successfully and subscribers notified.",
-            data: populated,
         });
-    } catch (error) {
-        console.error("createProduct error:", error); 
-        res.status(400).json({
-            success: false,
-            message: error.message || "Failed to create product",
-        });
+        console.log(
+          `New product email sent to ${subscribers.length} subscribers.`
+        );
+      }
+    } catch (emailError) {
+      console.error(
+        "Error sending new product email notification:",
+        emailError
+      );
     }
+    // === 3. Populate and Respond ===
+    const populated = await Product.findById(product._id)
+      .populate("category", "name slug icon")
+      .lean();
+
+    res.status(201).json({
+      success: true,
+      message: "Product created successfully and subscribers notified.",
+      data: populated,
+    });
+  } catch (error) {
+    console.error("createProduct error:", error);
+    res.status(400).json({
+      success: false,
+      message: error.message || "Failed to create product",
+    });
+  }
 };
 
 // === UPDATE PRODUCT (Modified for Multiple Images) ===
@@ -467,11 +477,9 @@ export const getFilterProducts = async (req, res) => {
     res.json({ success: true, count: products.length, data: products });
   } catch (error) {
     console.error("getFilterProducts error:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: error.message || "Failed to fetch filtered products",
-      });
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to fetch filtered products",
+    });
   }
 };

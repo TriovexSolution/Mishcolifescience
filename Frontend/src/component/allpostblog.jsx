@@ -129,7 +129,7 @@ export default function Allpostblog() {
     );
 
   return (
-    <div className="container my-5">
+    <div className="container my-5 justify-center">
       {/* Title */}
       <h4
         style={{
@@ -213,7 +213,7 @@ export default function Allpostblog() {
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
-                &lt; Prev
+                &lt;Prev
               </button>
             </li>
 
@@ -233,7 +233,7 @@ export default function Allpostblog() {
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >
-                Next &gt;
+                Next&gt;
               </button>
             </li>
           </ul>
